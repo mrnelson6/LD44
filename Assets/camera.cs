@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class camera : MonoBehaviour
 {
-
+    public float yOffset;
     public Transform target;
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class camera : MonoBehaviour
     {
         Vector3 pos = transform.position;
         pos.x = target.position.x;
-        pos.y = target.position.y;
+        pos.y = target.position.y + yOffset;
         transform.position = pos;
     }
 }

@@ -17,7 +17,6 @@ public class badguy : MonoBehaviour
     {
         Vector3 goodguy = target.position;
         Vector3 pos = transform.position;
-        Debug.Log(goodguy.x);
         if (Input.GetKey("up"))
         {
             pos.y += speed * Time.deltaTime;
