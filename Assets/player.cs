@@ -6,10 +6,12 @@ public class player : MonoBehaviour
 {
     public float speed = 25.0f;
     public Rigidbody2D rb;
-    // Start is called before the first frame update
+    public float CurrentLiquid = 40f;
+    public Dictionary<string, float> CurrentInvested = new Dictionary<string, float>(){["stock1key"] = 40f };
+    // Start is called before the first:w frame update
     void Start()
     {
-        rb.freezeRotation = true;
+
     }
 
     // Update is called once per frame
@@ -33,6 +35,7 @@ public class player : MonoBehaviour
         {
             pos.x -= speed * Time.deltaTime;
         }
+        this
 
 
         transform.position = pos;
