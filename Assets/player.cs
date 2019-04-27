@@ -11,12 +11,14 @@ public class player : MonoBehaviour
     // Start is called before the first:w frame update
     void Start()
     {
-
+        rb.freezeRotation = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y);
+
         Vector3 pos = transform.position;
 
         if (Input.GetKey("w"))

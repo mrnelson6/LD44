@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class badguy : MonoBehaviour
 {
-    public float speed = 25.0f;
+    public float speed = 5.0f;
     public Transform target;
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,7 @@ public class badguy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y);
         Vector3 goodguy = target.position;
         Vector3 pos = transform.position;
         if (Input.GetKey("up"))

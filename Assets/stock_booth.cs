@@ -5,6 +5,8 @@ using UnityEngine;
 public class stock_booth : MonoBehaviour
 {
     private bool close = false;
+    public AudioSource audioclipbuy;
+    public AudioSource audioclipsell;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -25,15 +27,17 @@ public class stock_booth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) - 3;
+
         if (close)
         {         
             if (Input.GetKeyDown("v"))
             {
-                Debug.Log("sell");
+                audioclipsell.Play();
             }
             else if (Input.GetKeyDown("b"))
             {
-                Debug.Log("Buy");
+                audioclipbuy.Play();
             }
         }
     }
