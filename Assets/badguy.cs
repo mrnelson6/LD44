@@ -2,39 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class player : MonoBehaviour
+public class badguy : MonoBehaviour
 {
     public float speed = 25.0f;
-    public Rigidbody2D rb;
+    public Transform target;
     // Start is called before the first frame update
     void Start()
     {
-        rb.freezeRotation = true;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        Vector3 goodguy = target.position;
         Vector3 pos = transform.position;
-
-        if (Input.GetKey("w"))
+        Debug.Log(goodguy.x);
+        if (Input.GetKey("up"))
         {
             pos.y += speed * Time.deltaTime;
         }
-        if (Input.GetKey("s"))
+        if (Input.GetKey("down"))
         {
             pos.y -= speed * Time.deltaTime;
         }
-        if (Input.GetKey("d"))
+        if (Input.GetKey("right"))
         {
             pos.x += speed * Time.deltaTime;
         }
-        if (Input.GetKey("a"))
+        if (Input.GetKey("left"))
         {
             pos.x -= speed * Time.deltaTime;
         }
-
-
         transform.position = pos;
     }
 }
