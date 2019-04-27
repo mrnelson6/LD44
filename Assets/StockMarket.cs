@@ -36,6 +36,19 @@ public class StockMarket : MonoBehaviour
         return new TransactionResult(NewLiquid: newLiquid,
                                      NewInvested: newInvested);
     }
+
+    public TransactionResult Sell(string stockKey)
+    {
+        var amount = this.GetMarketRateAmount();
+        var newLiquid = this.Player.CurrentLiquid;
+        newLiquid += amount;
+        var newInvested = this.Player.CurrentInvested.ToDictionary(entry => entry.Key,
+                                                                   entry => entry.Value);
+        newInvested[stockKey] -= amount;
+        return new TransactionResult(NewLiquid: newLiquid,
+                                     NewInvested: newInvested);
+
+    }
 }
 
 public class TransactionResult{

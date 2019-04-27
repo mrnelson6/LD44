@@ -35,9 +35,6 @@ public class player : MonoBehaviour
         {
             pos.x -= speed * Time.deltaTime;
         }
-        this
-
-
         transform.position = pos;
     }
 }
