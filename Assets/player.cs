@@ -18,19 +18,34 @@ public class player : MonoBehaviour
     private int frameCount = 0;
     private int sprIndex = 0;
     private int sprLen = 8;
-    private int sprSpd = 5;
+    public int sprSpd = 5;
+    private int sprLenAttack = 28;
+    public int sprSpdAttack = 2;
+    private int sprIndexAttack = 0;
+    private AudioSource ass;
+    public AudioClip ow;
+    public AudioClip oof;
+    public AudioClip almost;
+    public AudioClip murder;
+    public AudioClip get_back;
     // Start is called before the first:w frame update
     void Start()
     {
         rb.freezeRotation = true;
+        ass = GetComponent<AudioSource>();
     }
 
     void Awake()
     {
         upSpr = Resources.LoadAll<Sprite>("playerUp");
-        downSpr = Resources.LoadAll<Sprite>("playerDown");
+        downSpr = Resources.LoadAll<Sprite>("playerDown_attack");
         leftSpr = Resources.LoadAll<Sprite>("playerLeft");
         rightSpr = Resources.LoadAll<Sprite>("playerRight");
+        ow.LoadAudioData();
+        oof.LoadAudioData();
+        almost.LoadAudioData();
+        murder.LoadAudioData();
+        get_back.LoadAudioData();
     }
 
     // Update is called once per frame
@@ -40,6 +55,11 @@ public class player : MonoBehaviour
         if (frameCount % sprSpd == 0)
         {
             sprIndex = (sprIndex + 1) % sprLen;
+        }
+        //sprite frame animation for attacks
+        if (frameCount % sprSpdAttack == 0)
+        {
+            sprIndexAttack = (sprIndexAttack + 1) % sprLenAttack;
         }
 
         GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
@@ -54,7 +74,7 @@ public class player : MonoBehaviour
         if (Input.GetKey("s"))
         {
             pos.y -= speed * Time.deltaTime;
-            spriteObj.GetComponent<SpriteRenderer>().sprite = downSpr[sprIndex];
+            spriteObj.GetComponent<SpriteRenderer>().sprite = downSpr[sprIndexAttack];
         }
         if (Input.GetKey("d"))
         {
@@ -68,5 +88,40 @@ public class player : MonoBehaviour
         }
         transform.position = pos;
         frameCount++;
+    }
+
+    public void almost_damage()
+    {
+        if(!ass.isPlaying)
+        {
+            int rng = Random.Range(0, 8);
+            if (rng == 0)
+            {
+                ass.PlayOneShot(get_back, 0.5f);
+            }
+            else if (rng == 1)
+            {
+                ass.PlayOneShot(murder, 0.5f);
+            }
+            else if (rng == 2)
+            {
+                ass.PlayOneShot(almost, 0.5f);
+            }
+        }
+    }
+
+    public void damage()
+    {
+        if (!ass.isPlaying)
+        {
+            int rng = Random.Range(0, 8);
+            if (rng == 0)
+            {
+                ass.PlayOneShot(oof, 0.5f);
+            } else if (rng ==1 )
+            {
+                ass.PlayOneShot(ow, 0.5f);
+            }
+        }
     }
 }

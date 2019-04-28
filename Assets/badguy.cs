@@ -5,36 +5,164 @@ using UnityEngine;
 public class badguy : MonoBehaviour
 {
     public float speed = 5.0f;
-    public Transform target;
+    public player target;
     public int drawOrder;
+    private bool follow;
+    private bool meander;
+    private int counter;
+    private float meanderx;
+    private float meandery;
+    public Sprite[] badguyspr;
+    private int sprIndex = 0;
+    private float direction;
+    public GameObject spriteObj;
+    private bool attack;
+    private int attackCounter;
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<Rigidbody2D>().freezeRotation = true;
+        follow = false;
+        meander = false;
+        counter = 0;
+        attackCounter = 0;
+        direction = 0;
+        attack = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.name == "EdgeCollider" && !follow)
+        {
+            meander = false;
+        } 
+        if(other.name == "Player")
+        {
+            attack = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.name == "Player")
+        {
+            if(attackCounter > 30)
+            {
+                target.almost_damage();
+            }
+            attack = false;
+        }
+    }
+
+    void Awake()
+    {
+        badguyspr = Resources.LoadAll<Sprite>("badguySprite");
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
-        //;Vector3 goodguy = target.position;
-        Vector3 pos = transform.position;
-        if (Input.GetKey("up"))
+        if (!follow)
         {
-            pos.y += speed * Time.deltaTime;
+            if (Mathf.FloorToInt(Random.Range(0.0f, 1000.0f)) == 0)
+            {
+                follow = true;
+                counter = 1000;
+            }
+            else
+            {
+                if(meander)
+                {
+                    Vector3 pos = transform.position;
+                    Vector3 dest = pos;
+                    dest.x += meanderx * Time.deltaTime;
+                    dest.y += meandery * Time.deltaTime;
+                    Vector3 temp;
+                    temp.x = meanderx;
+                    temp.y = meandery;
+                    temp.z = 0;
+                    temp.Normalize();
+                    direction = Vector3.SignedAngle(temp, Vector3.right, Vector3.forward);
+                    pos = Vector3.MoveTowards(pos, dest, 0.05f);
+                    transform.position = pos;
+                    if (pos == dest)
+                    {
+                        follow = true;
+                        counter = 1000;
+                    }
+                }
+                else
+                {
+                    Vector3 pos = transform.position;
+                    meanderx = (Random.Range(-2.0f, 2.0f) + pos.x) * Time.deltaTime;
+                    meandery = (Random.Range(-2.0f, 2.0f) + pos.y) * Time.deltaTime;
+                    meander = true;
+                }
+            }
         }
-        if (Input.GetKey("down"))
+        else
         {
-            pos.y -= speed * Time.deltaTime;
+            counter--;
+            if(counter <= 0)
+            {
+                follow = false;
+                meander = false;
+            }
+            GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
+            player p = target;
+            Transform t = p.transform;
+            Vector3 goodguy = t.position;
+            Vector3 pos = transform.position;
+            Vector3 directionVec = goodguy - pos;
+            directionVec.Normalize();
+            pos = Vector3.MoveTowards(pos, goodguy, 0.05f);
+            transform.position = pos;
+            direction = Vector3.SignedAngle(directionVec, Vector3.right, Vector3.forward);
         }
-        if (Input.GetKey("right"))
+
+        if(direction < -135 || direction > 135)
         {
-            pos.x += speed * Time.deltaTime;
-        }
-        if (Input.GetKey("left"))
+            sprIndex = 4;
+        } else if (direction <= 135 && direction > 45)
         {
-            pos.x -= speed * Time.deltaTime;
+            sprIndex = 0;
         }
-        transform.position = pos;
+        else if (direction <= 45 && direction > -45)
+        {
+            sprIndex = 8;
+        } else
+        {
+            sprIndex = 12;
+        }
+        if (attack)
+        {
+            attackCounter++;
+            if (attackCounter < 20)
+            {
+                sprIndex++;
+            }
+            else if (attackCounter < 40)
+            {
+                sprIndex += 2;
+            }
+            else if (attackCounter < 60)
+            {
+                sprIndex += 3;
+                if(attackCounter == 50)
+                {
+                    target.CurrentLiquid--;
+                    target.damage();
+                }
+            }
+            else if (attackCounter > 80)
+            {
+                attackCounter = 0;
+            }
+        }
+        else
+        {
+            attackCounter = 0;
+        }
+        spriteObj.GetComponent<SpriteRenderer>().sprite = badguyspr[sprIndex];
     }
 }
