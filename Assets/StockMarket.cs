@@ -44,10 +44,6 @@ public class StockMarket : MonoBehaviour
             this.Player.CurrentLiquid -= amount;
             this.Player.CurrentInvested[stockKey] += amount;
         }
-        Debug.Log("liquid " + Player.CurrentLiquid);
-        Debug.Log("invested " + this.Player.CurrentInvested[stockKey]);
-        //return new TransactionResult(NewLiquid: newLiquid,
-        //                            NewInvested: newInvested);
     }
 
     public void Sell(string stockKey)
@@ -59,25 +55,11 @@ public class StockMarket : MonoBehaviour
             this.Player.CurrentInvested[stockKey] -= amount;
             audioclipsell.PlayScheduled(0.5);
         }
-        Debug.Log("liquid " + Player.CurrentLiquid);
-        Debug.Log("invested " + this.Player.CurrentInvested[stockKey]);
-        // return new TransactionResult(NewLiquid: newLiquid,
-        //                             NewInvested: newInvested);
 
     }
 
     public float getLiquid()
     {
         return Player.CurrentLiquid;
-    }
-}
-
-public class TransactionResult{
-    public float NewLiquid;
-    public Dictionary<string, float> NewInvested;
-
-    public TransactionResult(float NewLiquid, Dictionary<string, float> NewInvested){
-        this.NewLiquid = NewLiquid;
-        this.NewInvested = NewInvested;
     }
 }
