@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Spawn()
     {
-        //float chance = Mathf.FloorToInt(Random.Range(0.0f, 10.0f));
+        float chance = Mathf.FloorToInt(Random.Range(0.0f, 10.0f));
         //chance = 0;
         if (chance == 0)
         {
