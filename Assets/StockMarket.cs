@@ -16,24 +16,39 @@ public class StockMarket : MonoBehaviour
     public Image GreenArrow;
     public Image RedArrow;
     public Image Monitor;
-    public Image GraphLineImage;
+    public Image StartingGraphLineImage;
+
+    private Sprite SMLineGreenGreat;
+    private Sprite SMLineGreenGood;
+    private Sprite SMLineYellowOK;
+    private Sprite SMLineOrangeBad;
+    private Sprite SMLineRedYikes;
+
     private List<Image> onScreenGraphLines = new List<Image>();
     private Vector3 startingPositionGraphLines;
     private Quaternion startingRotationGraphLines;
     private float prevInvested = 50f;
     private float derMarketChangeAggregator = 0f;
     private float currentDerivativeMarketChange = 0f;
-    
+
+    private void Awake()
+    {
+        this.SMLineGreenGreat = Resources.Load<Sprite>("SMLine1");
+        this.SMLineGreenGood = Resources.Load<Sprite>("SMLine2");
+        this.SMLineYellowOK = Resources.Load<Sprite>("SMLine3");
+        this.SMLineOrangeBad = Resources.Load<Sprite>("SMLine4");
+        this.SMLineRedYikes = Resources.Load<Sprite>("SMLine5");
+    }
 
     private void Start()
     {
-        this.onScreenGraphLines.Add(this.GraphLineImage);
-        this.startingPositionGraphLines = new Vector3(this.GraphLineImage.transform.position.x,
-                                                      this.GraphLineImage.transform.position.y);
-        this.startingRotationGraphLines = new Quaternion(this.GraphLineImage.transform.rotation.x,
-            this.GraphLineImage.transform.rotation.y,
-            this.GraphLineImage.transform.rotation.z,
-            this.GraphLineImage.transform.rotation.w);
+        this.onScreenGraphLines.Add(this.StartingGraphLineImage);
+        this.startingPositionGraphLines = new Vector3(this.StartingGraphLineImage.transform.position.x,
+                                                      this.StartingGraphLineImage.transform.position.y);
+        this.startingRotationGraphLines = new Quaternion(this.StartingGraphLineImage.transform.rotation.x,
+            this.StartingGraphLineImage.transform.rotation.y,
+            this.StartingGraphLineImage.transform.rotation.z,
+            this.StartingGraphLineImage.transform.rotation.w);
 
         this.UpdateLiquidAndInvestedTextAndImage();
         InvokeRepeating("UpdateLiquidAndInvestedTextAndImage", 1f, 1f);
@@ -85,7 +100,7 @@ public class StockMarket : MonoBehaviour
 
         this.derMarketChangeAggregator += this.currentDerivativeMarketChange;
         var lastDrawnGraphLine = this.onScreenGraphLines.Last<Image>();
-        var imageLength = this.GraphLineImage.rectTransform.sizeDelta.x;
+        var imageLength = this.StartingGraphLineImage.rectTransform.sizeDelta.x;
         var dxToApply = -1f;
         var dyToApply = 0f;
         var LeftEdgeOfMonitor = (Monitor.transform.position.x - Monitor.rectTransform.sizeDelta.x / 2f) + 20f;
@@ -109,6 +124,34 @@ public class StockMarket : MonoBehaviour
             {
                 dyToApply = 10f;
             }
+
+            //Color section
+            var greatThresh = 4f;
+            var goodThresh = 2f;
+            var okThresh = -2;
+            var badThresh = -4f;
+            if (this.derMarketChangeAggregator >= greatThresh)
+            {
+                clone.sprite = this.SMLineGreenGreat;
+            } else if(derMarketChangeAggregator < greatThresh && 
+                      derMarketChangeAggregator >= goodThresh){
+                clone.sprite = this.SMLineGreenGood;
+            } else if(derMarketChangeAggregator < goodThresh && 
+                      derMarketChangeAggregator >= okThresh){
+                clone.sprite = this.SMLineYellowOK;
+            } else if (derMarketChangeAggregator < okThresh && 
+                       derMarketChangeAggregator >= badThresh)
+            {
+                clone.sprite = this.SMLineOrangeBad;
+            } else if (derMarketChangeAggregator < badThresh)
+            {
+                clone.sprite = this.SMLineRedYikes;
+            } else
+            {
+                clone.sprite = this.SMLineYellowOK;
+            }
+            //end color section
+
             this.derMarketChangeAggregator = 0f;
         }
         var imagesToRemove = new List<Image>();
