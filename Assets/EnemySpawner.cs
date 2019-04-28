@@ -26,6 +26,7 @@ public class EnemySpawner : MonoBehaviour
         {
             int spawnPointIndex = Random.Range(0, spawnPoints.Length);
             Instantiate(bg, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+           Transform a = bg.transform;
             badguys.Add(bg);
             bg.target = target;
         }
