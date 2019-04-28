@@ -6,17 +6,18 @@ public class badguy : MonoBehaviour
 {
     public float speed = 5.0f;
     public Transform target;
+    public int drawOrder;
     // Start is called before the first frame update
     void Start()
     {
-        
+        GetComponent<Rigidbody2D>().freezeRotation = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y);
-        Vector3 goodguy = target.position;
+        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
+        //;Vector3 goodguy = target.position;
         Vector3 pos = transform.position;
         if (Input.GetKey("up"))
         {
