@@ -109,7 +109,9 @@ public class badguy : MonoBehaviour
                 meander = false;
             }
             GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
-            Vector3 goodguy = target.transform.position;
+            player p = target;
+            Transform t = p.transform;
+            Vector3 goodguy = t.position;
             Vector3 pos = transform.position;
             Vector3 directionVec = goodguy - pos;
             directionVec.Normalize();

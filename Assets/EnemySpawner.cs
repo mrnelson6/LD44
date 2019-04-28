@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     {
         InvokeRepeating("Spawn", spawnTime, spawnTime);
         chance = 0;
+        badguys = new List<badguy>();
     }
 
     void Spawn()
