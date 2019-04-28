@@ -18,7 +18,6 @@ public class EnemySpawner : MonoBehaviour
     {
         float chance = Mathf.FloorToInt(Random.Range(0.0f, 10.0f));
         chance = 0;
-        Debug.Log("hi");
         if (chance == 0)
         {
             int spawnPointIndex = Random.Range(0, spawnPoints.Length);
