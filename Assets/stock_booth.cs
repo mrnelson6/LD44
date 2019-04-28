@@ -7,7 +7,6 @@ public class stock_booth : MonoBehaviour
     private bool close = false;
 
     public StockMarket sm;
-    private int drawOffset = -3;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -27,7 +26,7 @@ public class stock_booth : MonoBehaviour
 
     private void Start()
     {
-        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) - drawOffset;
+        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y);
     }
 
     // Update is called once per frame

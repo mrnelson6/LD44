@@ -16,7 +16,7 @@ public class badguy : MonoBehaviour
     void Update()
     {
         GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y);
-        Vector3 goodguy = target.position;
+        //;Vector3 goodguy = target.position;
         Vector3 pos = transform.position;
         if (Input.GetKey("up"))
         {
