@@ -15,11 +15,20 @@ public class StockMarket : MonoBehaviour
     public Text InvestedText;
     public Text PlusText;
     public Text MinusText;
+    public Image GraphStartingPoint;
 
     void Update()
     {
         LiquidText.text = String.Format(  "Liquid Life:   {0} ♡", Player.CurrentLiquid);
-        InvestedText.text = String.Format("Invested Life: {0} ♡", Player.CurrentInvested["stock1key"]); 
+        InvestedText.text = String.Format("Invested Life: {0} ♡", Player.CurrentInvested["stock1key"]);
+        this.ApplyMoveGraphEffect();
+        var pos = GraphStartingPoint.transform.position;
+      
+    }
+
+    private void ApplyMoveGraphEffect()
+    {
+
     }
 
     private float GetMarketRateAmount(){
