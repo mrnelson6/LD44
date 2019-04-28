@@ -17,7 +17,15 @@ public class StockMarket : MonoBehaviour
     public Text MinusText;
     public Image Monitor;
     public Image GraphStartingPoint;
-    private List<Image> onScreenGraphs = new List<Image>();
+    private List<Image> onScreenGraphLines = new List<Image>();
+    private Vector3 startingPositionGraphLines;
+
+    private void Start()
+    {
+        this.onScreenGraphLines.Add(this.GraphStartingPoint);
+        this.startingPositionGraphLines = new Vector3(this.GraphStartingPoint.transform.position.x,
+                                                      this.GraphStartingPoint.transform.position.y);
+    }
 
     void Update()
     {
@@ -28,10 +36,28 @@ public class StockMarket : MonoBehaviour
 
     private void ApplyMoveGraphEffect()
     {
-        var pos = GraphStartingPoint.transform.position;
-        pos.x -= 1;
-        GraphStartingPoint.transform.position = pos;
+        var lastDrawnGraphLine = this.onScreenGraphLines.Last<Image>();
+        //if(lastDrawnGraphLine.transform.position.x < Monitor.transform.position.x)
+        if(Input.GetKey("0")){
+            var clone = Instantiate(lastDrawnGraphLine);
+            var pos = clone.transform.position;
+            //pos.x += 10;
+            clone.transform.position = pos;
+            clone.transform.SetParent(lastDrawnGraphLine.transform.parent);
+            //clone.transform.SetParent();
+        
+        //    this.onScreenGraphLines.Add(clone);
+        }
         var LeftEdgeOfMonitor = (Monitor.transform.position.x - Monitor.rectTransform.sizeDelta.x / 2f);
+        foreach (var image in this.onScreenGraphLines) {
+            var pos = GraphStartingPoint.transform.position;
+            pos.x -= 1;
+            GraphStartingPoint.transform.position = pos;
+            if (image.transform.position.x < LeftEdgeOfMonitor){
+                Destroy(image);
+                this.onScreenGraphLines.Remove(image);
+            }
+        }
         if (GraphStartingPoint.transform.position.x < LeftEdgeOfMonitor)
         {
             Destroy(GraphStartingPoint);
