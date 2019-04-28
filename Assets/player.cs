@@ -8,8 +8,8 @@ public class player : MonoBehaviour
     public float speed = 25.0f;
     public int drawOrder;
     public Rigidbody2D rb;
-    public float CurrentLiquid = 40f;
-    public Dictionary<string, float> CurrentInvested = new Dictionary<string, float>(){["stock1key"] = 40f };
+    public float CurrentLiquid = 50f;
+    public Dictionary<string, float> CurrentInvested = new Dictionary<string, float>(){["stock1key"] = 50f };
     public GameObject spriteObj;
     public Sprite[] upSpr;
     public Sprite[] downSpr;

@@ -13,8 +13,13 @@ public class StockMarket : MonoBehaviour
     private float perfectEconomySteadyBullGrowth = 1f;
     public Text LiquidText;
     public Text InvestedText;
-    public Image GreenArrow;
-    public Image RedArrow;
+    public Text TotalText;
+    public Image InvestedHeart;
+    public Image InvestedGreenArrow;
+    public Image InvestedRedArrow;
+    public Image LiquidHeart;
+    public Image LiquidGreenArrow;
+    public Image LiquidRedArrow;
     public Image Monitor;
     public Image StartingGraphLineImage;
 
@@ -28,6 +33,7 @@ public class StockMarket : MonoBehaviour
     private Vector3 startingPositionGraphLines;
     private Quaternion startingRotationGraphLines;
     private float prevInvested = 50f;
+    private float prevLiquid = 50f;
     private float derMarketChangeAggregator = 0f;
     private float currentDerivativeMarketChange = 0f;
 
@@ -65,17 +71,29 @@ public class StockMarket : MonoBehaviour
     {
         LiquidText.text = String.Format("{0:0}", Player.CurrentLiquid);
         InvestedText.text = String.Format("{0:0}", Player.CurrentInvested["stock1key"]);
-        this.RedArrow.enabled = false;
-        this.GreenArrow.enabled = false;
+        TotalText.text = String.Format("{0:0}", Player.CurrentLiquid + Player.CurrentInvested["stock1key"]);
+        this.InvestedRedArrow.enabled = false;
+        this.InvestedGreenArrow.enabled = false;
+        this.LiquidGreenArrow.enabled = false;
+        this.LiquidRedArrow.enabled = false;
         if(this.Player.CurrentInvested["stock1key"] < this.prevInvested)
         {
-            this.RedArrow.enabled = true;
+            this.InvestedRedArrow.enabled = true;
         }
         if(this.Player.CurrentInvested["stock1key"] > this.prevInvested)
         {
-            this.GreenArrow.enabled = true;
+            this.InvestedGreenArrow.enabled = true;
+        }
+        if(this.Player.CurrentLiquid < this.prevLiquid)
+        {
+            this.LiquidRedArrow.enabled = true;
+        }
+        if(this.Player.CurrentLiquid > this.prevLiquid)
+        {
+            this.LiquidGreenArrow.enabled = true;
         }
         this.prevInvested = Player.CurrentInvested["stock1key"];
+        this.prevLiquid = Player.CurrentLiquid;
     }
 
     private void ApplyMarketChangeToPlayer(){
