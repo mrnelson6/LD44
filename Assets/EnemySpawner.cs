@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public float spawnTime = 5f;
+    public float spawnTime = 1f;
     public badguy bg;
     public Transform[] spawnPoints;
     public player target;
@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
         {
             counter++;
         } else {
-            chance = Random.Range(0, 3);
+            chance = Random.Range(0, 1);
             if (chance == 0 && !target.gameOver)
             {
                 int spawnPointIndex = Random.Range(0, spawnPoints.Length);

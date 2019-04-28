@@ -13,6 +13,7 @@ public class player : MonoBehaviour
     public GameObject spriteObj;
     public Sprite[] upSpr;
     public Sprite[] downSpr;
+    public Sprite[] downSprAttack;
     public Sprite[] leftSpr;
     public Sprite[] rightSpr;
     private int frameCount = 0;
@@ -56,7 +57,8 @@ public class player : MonoBehaviour
     void Awake()
     {
         upSpr = Resources.LoadAll<Sprite>("playerUp");
-        downSpr = Resources.LoadAll<Sprite>("playerDown_attack");
+        downSpr = Resources.LoadAll<Sprite>("playerDown");
+        downSprAttack = Resources.LoadAll<Sprite>("playerDown_attack");
         leftSpr = Resources.LoadAll<Sprite>("playerLeft");
         rightSpr = Resources.LoadAll<Sprite>("playerRight");
         ow.LoadAudioData();
@@ -83,11 +85,24 @@ public class player : MonoBehaviour
         GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
 
         Vector3 pos = transform.position;
+        if (Input.GetKeyDown("space"))
+        {
+            attack = true;
+        }
+
 
         if (Input.GetKey("w"))
         {
             pos.y += speed * Time.deltaTime;
-            spriteObj.GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
+            if(!attack)
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
+            }
+            else
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
+            }
+
             up = true;
             down = false;
             right = false;
@@ -96,17 +111,32 @@ public class player : MonoBehaviour
         if (Input.GetKey("s"))
         {
             pos.y -= speed * Time.deltaTime;
-            spriteObj.GetComponent<SpriteRenderer>().sprite = downSpr[sprIndex];
+            if (!attack)
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = downSpr[sprIndex];
+            }
+            else
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = downSprAttack[sprIndexAttack];
+            }
+
             up = false;
             down = true;
             right = false;
             left = false;
-            spriteObj.GetComponent<SpriteRenderer>().sprite = downSpr[sprIndexAttack];
         }
         if (Input.GetKey("d"))
         {
             pos.x += speed * Time.deltaTime;
-            spriteObj.GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
+            if (!attack)
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
+            }
+            else
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
+            }
+
             up = false;
             down = false;
             right = true;
@@ -115,20 +145,25 @@ public class player : MonoBehaviour
         if (Input.GetKey("a"))
         {
             pos.x -= speed * Time.deltaTime;
-            spriteObj.GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
+            if (!attack)
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
+            }
+            else
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
+            }
+
             up = false;
             down = false;
             right = false;
             left = true;
         }
-        if(Input.GetKeyDown("space"))
-        {
-            attack = true;
-        }
+
         if(attack)
         {
             attackCounter++;
-            if(attackCounter >= 15)
+            if(attackCounter >= 9)
             {
                 Vector2 place = cc.offset;
                 if (up)
@@ -149,7 +184,7 @@ public class player : MonoBehaviour
                 cc.offset = place;
                 //start the attack
             }
-            if(attackCounter > 25)
+            if(attackCounter > 18)
             {
                 attack = false;
                 attackCounter = 0;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class badguy : MonoBehaviour
 {
-    public float speed = 5.0f;
+    private float speed = 0.09f;
     public player target;
     public int drawOrder;
     private bool follow;
@@ -50,11 +50,8 @@ public class badguy : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.name == "Attack"&& target.attackCounter > 20 )
+        if (other.name == "Attack"&& target.attackCounter > 15 )
         {
-            Debug.Log("hi");
-            //Destroy(rb.gameObject);
-            //Destroy(sr.gameObject);
             Destroy(this.gameObject);
         }
     }
@@ -100,7 +97,7 @@ public class badguy : MonoBehaviour
                     temp.z = 0;
                     temp.Normalize();
                     direction = Vector3.SignedAngle(temp, Vector3.right, Vector3.forward);
-                    pos = Vector3.MoveTowards(pos, dest, 0.05f);
+                    pos = Vector3.MoveTowards(pos, dest, speed);
                     transform.position = pos;
                     if (pos == dest)
                     {
@@ -127,7 +124,7 @@ public class badguy : MonoBehaviour
             }
             GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
             Vector3 goodguy;
-            if (target.transform == null)
+            if (target == null)
             {
                 goodguy = empty.transform.position;
             }
@@ -138,7 +135,7 @@ public class badguy : MonoBehaviour
             Vector3 pos = transform.position;
             Vector3 directionVec = goodguy - pos;
             directionVec.Normalize();
-            pos = Vector3.MoveTowards(pos, goodguy, 0.05f);
+            pos = Vector3.MoveTowards(pos, goodguy, speed);
             transform.position = pos;
             direction = Vector3.SignedAngle(directionVec, Vector3.right, Vector3.forward);
         }
