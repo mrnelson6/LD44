@@ -3177,7 +3177,7 @@ GameObject:
   - component: {fileID: 1433640960}
   - component: {fileID: 1433640959}
   m_Layer: 5
-  m_Name: StartingGraphImage
+  m_Name: GraphLineImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3442,7 +3442,7 @@ MonoBehaviour:
   PlusText: {fileID: 620416604}
   MinusText: {fileID: 675969309}
   Monitor: {fileID: 376824552}
-  GraphStartingPoint: {fileID: 1433640959}
+  GraphLineImage: {fileID: 1433640959}
 --- !u!1 &1664401130
 GameObject:
   m_ObjectHideFlags: 0
