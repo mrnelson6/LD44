@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 308671802}
   - component: {fileID: 308671804}
   - component: {fileID: 308671803}
+  - component: {fileID: 308671805}
   m_Layer: 5
   m_Name: LiquidText
   m_TagString: Untagged
@@ -278,6 +279,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 308671801}
   m_CullTransparentMesh: 0
+--- !u!114 &308671805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308671801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05457103f82e1844cb39d5c8a256ef47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &361979181
 GameObject:
   m_ObjectHideFlags: 0
@@ -3349,6 +3362,10 @@ MonoBehaviour:
   audioclipbuy: {fileID: 973814567}
   audioclipsell: {fileID: 1060800567}
   Player: {fileID: 1044896523}
+  LiquidText: {fileID: 308671803}
+  InvestedText: {fileID: 448481900}
+  PlusText: {fileID: 620416604}
+  MinusText: {fileID: 675969309}
 --- !u!1 &1664401130
 GameObject:
   m_ObjectHideFlags: 0

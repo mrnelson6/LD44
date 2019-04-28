@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StockMarket : MonoBehaviour
 {
@@ -10,9 +11,19 @@ public class StockMarket : MonoBehaviour
     public AudioSource audioclipsell;
     public player Player;
     private float perfectEconomySteadyBullGrowth = 1f;
+    public Text LiquidText;
+    public Text InvestedText;
+    public Text PlusText;
+    public Text MinusText;
 
-    private float GetMarketRateAmount()
+    void Update()
     {
+        LiquidText.text = String.Format(  "Liquid Life:   {0} ♡", Player.CurrentLiquid);
+        InvestedText.text = String.Format("Invested Life: {0} ♡", Player.CurrentInvested["stock1key"]); 
+    }
+
+
+    private float GetMarketRateAmount(){
         return perfectEconomySteadyBullGrowth;
     }
 
