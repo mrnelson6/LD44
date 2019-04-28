@@ -28,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
             counter++;
         } else {
             chance = Random.Range(0, 3);
-            if (chance == 0 && badguys.Count < 50 && !target.gameOver)
+            if (chance == 0 && !target.gameOver)
             {
                 int spawnPointIndex = Random.Range(0, spawnPoints.Length);
                 Instantiate(bg, spawnPoints[0].transform);

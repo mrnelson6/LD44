@@ -19,10 +19,15 @@ public class badguy : MonoBehaviour
     public GameObject empty;
     private bool attack;
     private int attackCounter;
+    private Rigidbody2D rb;
+    private SpriteRenderer sr;
+
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Rigidbody2D>().freezeRotation = true;
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponentInChildren<SpriteRenderer>();
+        rb.freezeRotation = true;
         follow = false;
         meander = false;
         counter = 0;
@@ -40,6 +45,17 @@ public class badguy : MonoBehaviour
         if(other.name == "Player")
         {
             attack = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.name == "Attack"&& target.attackCounter > 20 )
+        {
+            Debug.Log("hi");
+            //Destroy(rb.gameObject);
+            //Destroy(sr.gameObject);
+            Destroy(this.gameObject);
         }
     }
 

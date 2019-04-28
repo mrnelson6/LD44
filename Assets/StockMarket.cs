@@ -56,13 +56,13 @@ public class StockMarket : MonoBehaviour
             pos.x -= 1;
             image.transform.position = pos;
             if (image.transform.position.x < LeftEdgeOfMonitor){
-                this.onScreenGraphLines.Remove(image);
-                DestroyImmediate(image, false);
+                //this.onScreenGraphLines.Remove(image);
+               // DestroyImmediate(image, false);
             }
         }
         if (GraphLineImage.transform.position.x < LeftEdgeOfMonitor)
         {
-            DestroyImmediate(GraphLineImage, false);
+            //DestroyImmediate(GraphLineImage, false);
         }
     }
 

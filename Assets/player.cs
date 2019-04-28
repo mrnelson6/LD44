@@ -21,18 +21,33 @@ public class player : MonoBehaviour
     private int sprSpd = 10;
     private AudioSource ass;
     public bool gameOver;
+    public int attackCounter;
+    private bool attack;
+    private bool up;
+    private bool down;
+    private bool right;
+    private bool left;
 
     public AudioClip ow;
     public AudioClip oof;
     public AudioClip almost;
     public AudioClip murder;
     public AudioClip get_back;
+
+    public CircleCollider2D cc;
     // Start is called before the first:w frame update
     void Start()
     {
         rb.freezeRotation = true;
         ass = GetComponent<AudioSource>();
         gameOver = false;
+        attackCounter = 0;
+        attack = false;
+        up = false;
+        down = false;
+        right = false;
+        left = false;
+        cc = GetComponentInChildren<CircleCollider2D>();
     }
 
     void Awake()
@@ -65,23 +80,72 @@ public class player : MonoBehaviour
         {
             pos.y += speed * Time.deltaTime;
             spriteObj.GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
+            up = true;
+            down = false;
+            right = false;
+            left = false;
         }
         if (Input.GetKey("s"))
         {
             pos.y -= speed * Time.deltaTime;
             spriteObj.GetComponent<SpriteRenderer>().sprite = downSpr[sprIndex];
+            up = false;
+            down = true;
+            right = false;
+            left = false;
         }
         if (Input.GetKey("d"))
         {
             pos.x += speed * Time.deltaTime;
             spriteObj.GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
+            up = false;
+            down = false;
+            right = true;
+            left = false;
         }
         if (Input.GetKey("a"))
         {
             pos.x -= speed * Time.deltaTime;
             spriteObj.GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
+            up = false;
+            down = false;
+            right = false;
+            left = true;
         }
-
+        if(Input.GetKeyDown("space"))
+        {
+            attack = true;
+        }
+        if(attack)
+        {
+            attackCounter++;
+            if(attackCounter >= 15)
+            {
+                Vector2 place = cc.offset;
+                if (up)
+                {
+                    place.y = 1;
+                }
+                if (down)
+                {
+                    place.y = -1;
+                }
+                 if (right)
+                {
+                    place.x = 1;
+                } 
+                if(left){
+                    place.y = -1;
+                }
+                cc.offset = place;
+                //start the attack
+            }
+            if(attackCounter > 25)
+            {
+                attack = false;
+                attackCounter = 0;
+            }
+        }
         transform.position = pos;
         frameCount++;
     }
