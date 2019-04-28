@@ -16,15 +16,15 @@ public class StockMarket : MonoBehaviour
     public Text PlusText;
     public Text MinusText;
     public Image Monitor;
-    public Image GraphStartingPoint;
+    public Image GraphLineImage;
     private List<Image> onScreenGraphLines = new List<Image>();
     private Vector3 startingPositionGraphLines;
 
     private void Start()
     {
-        this.onScreenGraphLines.Add(this.GraphStartingPoint);
-        this.startingPositionGraphLines = new Vector3(this.GraphStartingPoint.transform.position.x,
-                                                      this.GraphStartingPoint.transform.position.y);
+        this.onScreenGraphLines.Add(this.GraphLineImage);
+        this.startingPositionGraphLines = new Vector3(this.GraphLineImage.transform.position.x,
+                                                      this.GraphLineImage.transform.position.y);
     }
 
     void Update()
@@ -35,32 +35,34 @@ public class StockMarket : MonoBehaviour
     }
 
     private void ApplyMoveGraphEffect()
+        ///Super hacky but it workz
     {
         var lastDrawnGraphLine = this.onScreenGraphLines.Last<Image>();
-        //if(lastDrawnGraphLine.transform.position.x < Monitor.transform.position.x)
-        if(Input.GetKey("0")){
-            var clone = Instantiate(lastDrawnGraphLine);
+        var imageLength = this.GraphLineImage.rectTransform.sizeDelta.x;
+        if(lastDrawnGraphLine.transform.position.x < (this.startingPositionGraphLines.x - imageLength)){
+            var clone = Instantiate(lastDrawnGraphLine, this.startingPositionGraphLines, lastDrawnGraphLine.transform.rotation);
             var pos = clone.transform.position;
             //pos.x += 10;
             clone.transform.position = pos;
             clone.transform.SetParent(lastDrawnGraphLine.transform.parent);
+            this.onScreenGraphLines.Add(clone);
             //clone.transform.SetParent();
         
         //    this.onScreenGraphLines.Add(clone);
         }
-        var LeftEdgeOfMonitor = (Monitor.transform.position.x - Monitor.rectTransform.sizeDelta.x / 2f);
+        var LeftEdgeOfMonitor = (Monitor.transform.position.x - Monitor.rectTransform.sizeDelta.x / 2f) + 20f;
         foreach (var image in this.onScreenGraphLines) {
-            var pos = GraphStartingPoint.transform.position;
+            var pos = image.transform.position;
             pos.x -= 1;
-            GraphStartingPoint.transform.position = pos;
+            image.transform.position = pos;
             if (image.transform.position.x < LeftEdgeOfMonitor){
                 Destroy(image);
                 this.onScreenGraphLines.Remove(image);
             }
         }
-        if (GraphStartingPoint.transform.position.x < LeftEdgeOfMonitor)
+        if (GraphLineImage.transform.position.x < LeftEdgeOfMonitor)
         {
-            Destroy(GraphStartingPoint);
+            Destroy(GraphLineImage);
         }
     }
 
