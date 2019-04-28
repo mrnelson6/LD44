@@ -109,9 +109,7 @@ public class badguy : MonoBehaviour
                 meander = false;
             }
             GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
-            player p = target;
-            Transform t = p.transform;
-            Vector3 goodguy = t.position;
+            Vector3 goodguy = target.transform.position;
             Vector3 pos = transform.position;
             Vector3 directionVec = goodguy - pos;
             directionVec.Normalize();
@@ -150,7 +148,6 @@ public class badguy : MonoBehaviour
                 sprIndex += 3;
                 if(attackCounter == 50)
                 {
-                    target.CurrentLiquid--;
                     target.damage();
                 }
             }

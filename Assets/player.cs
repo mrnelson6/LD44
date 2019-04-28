@@ -20,6 +20,7 @@ public class player : MonoBehaviour
     private int sprLen = 4;
     private int sprSpd = 10;
     private AudioSource ass;
+    public bool gameOver;
 
     public AudioClip ow;
     public AudioClip oof;
@@ -31,6 +32,7 @@ public class player : MonoBehaviour
     {
         rb.freezeRotation = true;
         ass = GetComponent<AudioSource>();
+        gameOver = false;
     }
 
     void Awake()
@@ -105,15 +107,24 @@ public class player : MonoBehaviour
 
     public void damage()
     {
-        if (!ass.isPlaying)
+        CurrentLiquid--;
+        if (CurrentLiquid == 0)
         {
-            int rng = Random.Range(0, 8);
-            if (rng == 0)
+            gameOver = true;
+        }
+        else
+        {
+            if (!ass.isPlaying)
             {
-                ass.PlayOneShot(oof, 0.5f);
-            } else if (rng ==1 )
-            {
-                ass.PlayOneShot(ow, 0.5f);
+                int rng = Random.Range(0, 8);
+                if (rng == 0)
+                {
+                    ass.PlayOneShot(oof, 0.5f);
+                }
+                else if (rng == 1)
+                {
+                    ass.PlayOneShot(ow, 0.5f);
+                }
             }
         }
     }
