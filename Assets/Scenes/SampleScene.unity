@@ -474,8 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2890ac909a54e459f04c9163b7894f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioclipbuy: {fileID: 973814567}
-  audioclipsell: {fileID: 1060800567}
+  sm: {fileID: 1543182232}
 --- !u!1 &556417490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,8 +1038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2890ac909a54e459f04c9163b7894f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioclipbuy: {fileID: 973814567}
-  audioclipsell: {fileID: 1060800567}
+  sm: {fileID: 1543182232}
 --- !u!61 &808735924
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1139,8 +1137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2890ac909a54e459f04c9163b7894f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioclipbuy: {fileID: 973814567}
-  audioclipsell: {fileID: 1060800567}
+  sm: {fileID: 1543182232}
 --- !u!61 &841538893
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1239,8 +1236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2890ac909a54e459f04c9163b7894f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioclipbuy: {fileID: 973814567}
-  audioclipsell: {fileID: 1060800567}
+  sm: {fileID: 1543182232}
 --- !u!61 &873367993
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1731,8 +1727,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1543182231}
+  - component: {fileID: 1543182232}
   m_Layer: 0
-  m_Name: StockBooths
+  m_Name: StockMarket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1758,6 +1755,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1543182232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543182230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc897d2efa3792041b00f1c9695e4bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioclipbuy: {fileID: 973814567}
+  audioclipsell: {fileID: 1060800567}
+  Player: {fileID: 1044896523}
 --- !u!1 &1664401130
 GameObject:
   m_ObjectHideFlags: 0

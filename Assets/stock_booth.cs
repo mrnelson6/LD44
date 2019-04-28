@@ -5,8 +5,9 @@ using UnityEngine;
 public class stock_booth : MonoBehaviour
 {
     private bool close = false;
-    public AudioSource audioclipbuy;
-    public AudioSource audioclipsell;
+
+    public StockMarket sm;
+    private int drawOffset = -3;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -24,20 +25,23 @@ public class stock_booth : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) - drawOffset;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) - 3;
-
         if (close)
         {         
             if (Input.GetKeyDown("v"))
-            {
-                audioclipsell.Play();
+            { 
+                sm.Sell("stock1key");
             }
             else if (Input.GetKeyDown("b"))
             {
-                audioclipbuy.Play();
+                sm.Buy("stock1key");
             }
         }
     }

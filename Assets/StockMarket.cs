@@ -6,48 +6,50 @@ using UnityEngine;
 
 public class StockMarket : MonoBehaviour
 {
-
+    public AudioSource audioclipbuy;
+    public AudioSource audioclipsell;
     public player Player;
     private float perfectEconomySteadyBullGrowth = 1f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private float GetMarketRateAmount()
     {
         return perfectEconomySteadyBullGrowth;
     }
 
-    public TransactionResult Buy(string stockKey){
-        var amount = this.GetMarketRateAmount();
-        var newLiquid = this.Player.CurrentLiquid;
-        newLiquid -= amount;
-        var newInvested = this.Player.CurrentInvested.ToDictionary(entry => entry.Key,
-                                                                   entry => entry.Value);
-        newInvested[stockKey] += amount;
-        return new TransactionResult(NewLiquid: newLiquid,
-                                     NewInvested: newInvested);
-    }
-
-    public TransactionResult Sell(string stockKey)
+    public void Buy(string stockKey)
     {
         var amount = this.GetMarketRateAmount();
-        var newLiquid = this.Player.CurrentLiquid;
-        newLiquid += amount;
-        var newInvested = this.Player.CurrentInvested.ToDictionary(entry => entry.Key,
-                                                                   entry => entry.Value);
-        newInvested[stockKey] -= amount;
-        return new TransactionResult(NewLiquid: newLiquid,
-                                     NewInvested: newInvested);
+        if(this.Player.CurrentLiquid > amount)
+        {
+            audioclipbuy.PlayScheduled(0.5);
+            this.Player.CurrentLiquid -= amount;
+            this.Player.CurrentInvested[stockKey] += amount;
+        }
+        Debug.Log("liquid " + Player.CurrentLiquid);
+        Debug.Log("invested " + this.Player.CurrentInvested[stockKey]);
+        //return new TransactionResult(NewLiquid: newLiquid,
+        //                            NewInvested: newInvested);
+    }
 
+    public void Sell(string stockKey)
+    {
+        var amount = this.GetMarketRateAmount();
+        if (this.Player.CurrentInvested[stockKey] >= amount)
+        {
+            this.Player.CurrentLiquid += amount;
+            this.Player.CurrentInvested[stockKey] -= amount;
+            audioclipsell.PlayScheduled(0.5);
+        }
+        Debug.Log("liquid " + Player.CurrentLiquid);
+        Debug.Log("invested " + this.Player.CurrentInvested[stockKey]);
+        // return new TransactionResult(NewLiquid: newLiquid,
+        //                             NewInvested: newInvested);
+
+    }
+
+    public float getLiquid()
+    {
+        return Player.CurrentLiquid;
     }
 }
 
