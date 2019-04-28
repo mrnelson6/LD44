@@ -22,7 +22,6 @@ public class StockMarket : MonoBehaviour
         InvestedText.text = String.Format("Invested Life: {0} ♡", Player.CurrentInvested["stock1key"]); 
     }
 
-
     private float GetMarketRateAmount(){
         return perfectEconomySteadyBullGrowth;
     }
