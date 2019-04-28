@@ -17,8 +17,8 @@ public class player : MonoBehaviour
     public Sprite[] rightSpr;
     private int frameCount = 0;
     private int sprIndex = 0;
-    private int sprLen = 4;
-    private int sprSpd = 10;
+    private int sprLen = 8;
+    private int sprSpd = 5;
     // Start is called before the first:w frame update
     void Start()
     {
