@@ -20,8 +20,10 @@ public class StockMarket : MonoBehaviour
     private List<Image> onScreenGraphLines = new List<Image>();
     private Vector3 startingPositionGraphLines;
     private Quaternion startingRotationGraphLines;
-    private float currentDerivativeMarketChange = 0f;
     private float prevInvested = 50f;
+    private float derMarketChangeAggregator = 0f;
+    private float currentDerivativeMarketChange = 0f;
+    
 
     private void Start()
     {
@@ -80,23 +82,22 @@ public class StockMarket : MonoBehaviour
     private void ApplyMoveGraphEffect()
         ///Super hacky but it workz
     {
+
+        this.derMarketChangeAggregator += this.currentDerivativeMarketChange;
         var lastDrawnGraphLine = this.onScreenGraphLines.Last<Image>();
         var imageLength = this.GraphLineImage.rectTransform.sizeDelta.x;
+        var monitorHeight = this.Monitor.rectTransform.sizeDelta.y;
         if(lastDrawnGraphLine.transform.position.x < (this.startingPositionGraphLines.x - imageLength)){
             var clonePos = new Vector3(this.startingPositionGraphLines.x,
                                        lastDrawnGraphLine.transform.position.y);
-            clonePos.y += this.currentDerivativeMarketChange * 3f;
-            //var cloneRotation = lastDrawnGraphLine.transform.Rotate(new Vector3(0, 1, 1), 20f);
+            clonePos.y += this.derMarketChangeAggregator;
             var clone = Instantiate(lastDrawnGraphLine, clonePos, this.startingRotationGraphLines);
-            clone.transform.Rotate(new Vector3(0, 1, 1), this.currentDerivativeMarketChange * 10f);
+            clone.transform.Rotate(new Vector3(0, 1, 1), this.derMarketChangeAggregator * 5f);
             var pos = clone.transform.position;
-            //pos.x += 10;
             clone.transform.position = pos;
             clone.transform.SetParent(lastDrawnGraphLine.transform.parent);
             this.onScreenGraphLines.Add(clone);
-            //clone.transform.SetParent();
-        
-        //    this.onScreenGraphLines.Add(clone);
+            this.derMarketChangeAggregator = 0f;
         }
         var LeftEdgeOfMonitor = (Monitor.transform.position.x - Monitor.rectTransform.sizeDelta.x / 2f) + 20f;
         var imagesToRemove = new List<Image>();
@@ -111,7 +112,7 @@ public class StockMarket : MonoBehaviour
         foreach(var image in imagesToRemove)
         {
             this.onScreenGraphLines.Remove(image);
-            Destroy(image);
+            DestroyImmediate(image);
         }
     }
 
