@@ -253,7 +253,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437485441}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.9944079, y: 8.36, z: 0}
+  m_LocalPosition: {x: 0.41, y: 8.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1819041984}
@@ -611,7 +611,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 765745754}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.01, y: 3.11, z: 0}
+  m_LocalPosition: {x: 10.66, y: 3.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1819041984}
@@ -1027,7 +1027,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804207803}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.65, y: -1.06, z: 0}
+  m_LocalPosition: {x: 10.9, y: -2.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1819041984}
@@ -1530,7 +1530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  drawOrder: -3
+  drawOrder: 2
   rb: {fileID: 1044896524}
   CurrentLiquid: 40
 --- !u!50 &1044896524
@@ -1923,7 +1923,11 @@ MonoBehaviour:
   spawnTime: 3
   bg: {fileID: 2892668626657279613, guid: 14dae0046de36e44695a8b13bcce4179, type: 3}
   spawnPoints:
+  - {fileID: 437485442}
   - {fileID: 765745755}
+  - {fileID: 361979182}
+  - {fileID: 804207804}
+  - {fileID: 1939553374}
   target: {fileID: 1044896521}
 --- !u!4 &1819041984
 Transform:

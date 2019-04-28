@@ -18,7 +18,7 @@ public class player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) - drawOrder;
+        GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
 
         Vector3 pos = transform.position;
 
