@@ -23,6 +23,7 @@ public class player : MonoBehaviour
     public int sprSpdAttack = 2;
     private int sprIndexAttack = 0;
     private AudioSource ass;
+    public bool gameOver;
     public AudioClip ow;
     public AudioClip oof;
     public AudioClip almost;
@@ -33,6 +34,7 @@ public class player : MonoBehaviour
     {
         rb.freezeRotation = true;
         ass = GetComponent<AudioSource>();
+        gameOver = false;
     }
 
     void Awake()
@@ -86,6 +88,7 @@ public class player : MonoBehaviour
             pos.x -= speed * Time.deltaTime;
             spriteObj.GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
         }
+
         transform.position = pos;
         frameCount++;
     }
@@ -112,15 +115,24 @@ public class player : MonoBehaviour
 
     public void damage()
     {
-        if (!ass.isPlaying)
+        CurrentLiquid--;
+        if (CurrentLiquid == 0)
         {
-            int rng = Random.Range(0, 8);
-            if (rng == 0)
+            gameOver = true;
+        }
+        else
+        {
+            if (!ass.isPlaying)
             {
-                ass.PlayOneShot(oof, 0.5f);
-            } else if (rng ==1 )
-            {
-                ass.PlayOneShot(ow, 0.5f);
+                int rng = Random.Range(0, 8);
+                if (rng == 0)
+                {
+                    ass.PlayOneShot(oof, 0.5f);
+                }
+                else if (rng == 1)
+                {
+                    ass.PlayOneShot(ow, 0.5f);
+                }
             }
         }
     }
