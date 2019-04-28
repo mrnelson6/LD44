@@ -86,7 +86,11 @@ public class StockMarket : MonoBehaviour
         this.derMarketChangeAggregator += this.currentDerivativeMarketChange;
         var lastDrawnGraphLine = this.onScreenGraphLines.Last<Image>();
         var imageLength = this.GraphLineImage.rectTransform.sizeDelta.x;
-        var monitorHeight = this.Monitor.rectTransform.sizeDelta.y;
+        var dxToApply = -1f;
+        var dyToApply = 0f;
+        var LeftEdgeOfMonitor = (Monitor.transform.position.x - Monitor.rectTransform.sizeDelta.x / 2f) + 20f;
+        var TopEdgeOfMonitor = (Monitor.transform.position.y + Monitor.rectTransform.sizeDelta.y / 2f) - 20f;
+        var BottomEdgeOfMonitor = (Monitor.transform.position.y - Monitor.rectTransform.sizeDelta.y / 2f) + 20f; 
         if(lastDrawnGraphLine.transform.position.x < (this.startingPositionGraphLines.x - imageLength)){
             var clonePos = new Vector3(this.startingPositionGraphLines.x,
                                        lastDrawnGraphLine.transform.position.y);
@@ -97,13 +101,21 @@ public class StockMarket : MonoBehaviour
             clone.transform.position = pos;
             clone.transform.SetParent(lastDrawnGraphLine.transform.parent);
             this.onScreenGraphLines.Add(clone);
+            if(clone.transform.position.y > TopEdgeOfMonitor)
+            {
+                dyToApply = -10f;
+            }
+            if(clone.transform.position.y < BottomEdgeOfMonitor)
+            {
+                dyToApply = 10f;
+            }
             this.derMarketChangeAggregator = 0f;
         }
-        var LeftEdgeOfMonitor = (Monitor.transform.position.x - Monitor.rectTransform.sizeDelta.x / 2f) + 20f;
         var imagesToRemove = new List<Image>();
         foreach (var image in this.onScreenGraphLines) {
             var pos = image.transform.position;
-            pos.x -= 1;
+            pos.x += dxToApply;
+            pos.y += dyToApply;
             image.transform.position = pos;
             if (image.transform.position.x < LeftEdgeOfMonitor){
                 imagesToRemove.Add(image);
@@ -114,6 +126,7 @@ public class StockMarket : MonoBehaviour
             this.onScreenGraphLines.Remove(image);
             DestroyImmediate(image);
         }
+
     }
 
     private float GetMarketRateAmount(){
