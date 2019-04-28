@@ -13,14 +13,15 @@ public class StockMarket : MonoBehaviour
     private float perfectEconomySteadyBullGrowth = 1f;
     public Text LiquidText;
     public Text InvestedText;
-    public Text PlusText;
-    public Text MinusText;
+    public Image GreenArrow;
+    public Image RedArrow;
     public Image Monitor;
     public Image GraphLineImage;
     private List<Image> onScreenGraphLines = new List<Image>();
     private Vector3 startingPositionGraphLines;
     private Quaternion startingRotationGraphLines;
     private float currentDerivativeMarketChange = 0f;
+    private float prevInvested = 50f;
 
     private void Start()
     {
@@ -31,14 +32,37 @@ public class StockMarket : MonoBehaviour
             this.GraphLineImage.transform.rotation.y,
             this.GraphLineImage.transform.rotation.z,
             this.GraphLineImage.transform.rotation.w);
+
+        this.UpdateLiquidAndInvestedTextAndImage();
+        InvokeRepeating("UpdateLiquidAndInvestedTextAndImage", 1f, 1f);
     }
 
     void Update()
     {
-        LiquidText.text = String.Format(  "Liquid Life:   {0} ♡", Player.CurrentLiquid);
-        InvestedText.text = String.Format("Invested Life: {0} ♡", Player.CurrentInvested["stock1key"]);
         this.UpdateMarketChange();
-        this.ApplyMoveGraphEffect();      
+        this.ApplyMoveGraphEffect();
+        this.ApplyMarketChangeToPlayer();
+    }
+
+    void UpdateLiquidAndInvestedTextAndImage()
+    {
+        LiquidText.text = String.Format("Liquid Life:   {0:0} ♡", Player.CurrentLiquid);
+        InvestedText.text = String.Format("Invested Life: {0:0} ♡", Player.CurrentInvested["stock1key"]);
+        this.RedArrow.enabled = false;
+        this.GreenArrow.enabled = false;
+        if(this.Player.CurrentInvested["stock1key"] < this.prevInvested)
+        {
+            this.RedArrow.enabled = true;
+        }
+        if(this.Player.CurrentInvested["stock1key"] > this.prevInvested)
+        {
+            this.GreenArrow.enabled = true;
+        }
+        this.prevInvested = Player.CurrentInvested["stock1key"];
+    }
+
+    private void ApplyMarketChangeToPlayer(){
+        this.Player.CurrentInvested["stock1key"] += this.currentDerivativeMarketChange;
     }
 
     private void UpdateMarketChange()
