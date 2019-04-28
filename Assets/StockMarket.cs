@@ -62,12 +62,18 @@ public class StockMarket : MonoBehaviour
     }
 
     private void ApplyMarketChangeToPlayer(){
-        this.Player.CurrentInvested["stock1key"] += this.currentDerivativeMarketChange;
+        if (this.Player.CurrentInvested["stock1key"] <= 0f)
+        {
+            this.Player.CurrentInvested["stock1key"] = 0f;
+        }
+        else
+        {
+            this.Player.CurrentInvested["stock1key"] += this.currentDerivativeMarketChange;
+        }
     }
 
     private void UpdateMarketChange()
     {
-
         this.currentDerivativeMarketChange = (float)UnityEngine.Random.Range(-1f, 1f);
     }
 
@@ -93,14 +99,19 @@ public class StockMarket : MonoBehaviour
         //    this.onScreenGraphLines.Add(clone);
         }
         var LeftEdgeOfMonitor = (Monitor.transform.position.x - Monitor.rectTransform.sizeDelta.x / 2f) + 20f;
+        var imagesToRemove = new List<Image>();
         foreach (var image in this.onScreenGraphLines) {
             var pos = image.transform.position;
             pos.x -= 1;
             image.transform.position = pos;
             if (image.transform.position.x < LeftEdgeOfMonitor){
-                Destroy(image);
-                this.onScreenGraphLines.Remove(image);
-            }
+                imagesToRemove.Add(image);
+           }
+        }
+        foreach(var image in imagesToRemove)
+        {
+            this.onScreenGraphLines.Remove(image);
+            Destroy(image);
         }
     }
 
