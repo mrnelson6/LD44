@@ -10,11 +10,16 @@ public class StockMarket : MonoBehaviour
     public AudioSource audioclipbuy;
     public AudioSource audioclipsell;
     public player Player;
-    private float perfectEconomySteadyBullGrowth = 1f;
+    private float defaultUnityToBuy = 2f;
     public Text LiquidText;
     public Text InvestedText;
-    public Image GreenArrow;
-    public Image RedArrow;
+    public Text TotalText;
+    public Image InvestedHeart;
+    public Image InvestedGreenArrow;
+    public Image InvestedRedArrow;
+    public Image LiquidHeart;
+    public Image LiquidGreenArrow;
+    public Image LiquidRedArrow;
     public Image Monitor;
     public Image StartingGraphLineImage;
 
@@ -28,7 +33,17 @@ public class StockMarket : MonoBehaviour
     private Vector3 startingPositionGraphLines;
     private Quaternion startingRotationGraphLines;
     private float prevInvested = 50f;
+    private float prevLiquid = 50f;
     private float derMarketChangeAggregator = 0f;
+
+    private bool currentlyAnimatingBuyEffect = false;
+    private int BuyAnimateNumFramesAggr = 0;
+    private bool currentlyAnimatingSellEffect = false;
+    private int SellAnimateNumFramesAggr = 0;
+    private int numFramesToApplyEffect = 20;
+    private Vector3 InitialLiquidHeartPos;
+    private Vector3 InitialInvestedHeartPos;
+    
     private float currentDerivativeMarketChange = 0f;
 
     private void Awake()
@@ -49,6 +64,10 @@ public class StockMarket : MonoBehaviour
             this.StartingGraphLineImage.transform.rotation.y,
             this.StartingGraphLineImage.transform.rotation.z,
             this.StartingGraphLineImage.transform.rotation.w);
+        this.InitialLiquidHeartPos = new Vector3(this.LiquidHeart.transform.position.x,
+                                                   this.LiquidHeart.transform.position.y);
+        this.InitialInvestedHeartPos = new Vector3(this.InvestedHeart.transform.position.x,
+                                                   this.InvestedHeart.transform.position.y);
 
         this.UpdateLiquidAndInvestedTextAndImage();
         InvokeRepeating("UpdateLiquidAndInvestedTextAndImage", 1f, 1f);
@@ -59,23 +78,37 @@ public class StockMarket : MonoBehaviour
         this.UpdateMarketChange();
         this.ApplyMoveGraphEffect();
         this.ApplyMarketChangeToPlayer();
+        this.AnimateBuyEffect();
+        this.AnimateSellEffect();
     }
 
     void UpdateLiquidAndInvestedTextAndImage()
     {
-        LiquidText.text = String.Format("Liquid Life:   {0:0} ♡", Player.CurrentLiquid);
-        InvestedText.text = String.Format("Invested Life: {0:0} ♡", Player.CurrentInvested["stock1key"]);
-        this.RedArrow.enabled = false;
-        this.GreenArrow.enabled = false;
+        LiquidText.text = String.Format("{0:0}", Player.CurrentLiquid);
+        InvestedText.text = String.Format("{0:0}", Player.CurrentInvested["stock1key"]);
+        TotalText.text = String.Format("{0:0}", Player.CurrentLiquid + Player.CurrentInvested["stock1key"]);
+        this.InvestedRedArrow.enabled = false;
+        this.InvestedGreenArrow.enabled = false;
+        this.LiquidGreenArrow.enabled = false;
+        this.LiquidRedArrow.enabled = false;
         if(this.Player.CurrentInvested["stock1key"] < this.prevInvested)
         {
-            this.RedArrow.enabled = true;
+            this.InvestedRedArrow.enabled = true;
         }
         if(this.Player.CurrentInvested["stock1key"] > this.prevInvested)
         {
-            this.GreenArrow.enabled = true;
+            this.InvestedGreenArrow.enabled = true;
+        }
+        if(this.Player.CurrentLiquid < this.prevLiquid)
+        {
+            this.LiquidRedArrow.enabled = true;
+        }
+        if(this.Player.CurrentLiquid > this.prevLiquid)
+        {
+            this.LiquidGreenArrow.enabled = true;
         }
         this.prevInvested = Player.CurrentInvested["stock1key"];
+        this.prevLiquid = Player.CurrentLiquid;
     }
 
     private void ApplyMarketChangeToPlayer(){
@@ -162,20 +195,18 @@ public class StockMarket : MonoBehaviour
             image.transform.position = pos;
             if (image.transform.position.x < LeftEdgeOfMonitor){
                 imagesToRemove.Add(image);
-            }
+           }
         }
         foreach(var image in imagesToRemove)
         {
-
             this.onScreenGraphLines.Remove(image);
             DestroyImmediate(image);
-
         }
 
     }
 
     private float GetMarketRateAmount(){
-        return perfectEconomySteadyBullGrowth;
+        return defaultUnityToBuy;
     }
 
     public void Buy(string stockKey)
@@ -186,6 +217,35 @@ public class StockMarket : MonoBehaviour
             audioclipbuy.PlayScheduled(0.5);
             this.Player.CurrentLiquid -= amount;
             this.Player.CurrentInvested[stockKey] += amount;
+        }
+        if (!this.currentlyAnimatingBuyEffect)
+        {
+            this.TriggerAnimateBuyEffect();
+        }
+    }
+
+    public void TriggerAnimateBuyEffect()
+    {
+        this.currentlyAnimatingBuyEffect = true;
+        this.BuyAnimateNumFramesAggr = 0;
+    }
+
+    public void AnimateBuyEffect()
+    {
+        if (this.currentlyAnimatingBuyEffect)
+        {
+            this.BuyAnimateNumFramesAggr++;
+            if (this.BuyAnimateNumFramesAggr > this.numFramesToApplyEffect)
+            {
+                this.currentlyAnimatingBuyEffect = false;
+                this.LiquidHeart.transform.position = this.InitialLiquidHeartPos;
+            }
+            else
+            {
+                var pos = this.LiquidHeart.transform.position;
+                pos.y -= 3;
+                this.LiquidHeart.transform.position = pos;
+            }
         }
     }
 
@@ -198,8 +258,38 @@ public class StockMarket : MonoBehaviour
             this.Player.CurrentInvested[stockKey] -= amount;
             audioclipsell.PlayScheduled(0.5);
         }
+        if (!this.currentlyAnimatingSellEffect)
+        {
+            this.TriggerAnimateSellEffect();
+        }
 
     }
+
+    public void TriggerAnimateSellEffect()
+    {
+        this.currentlyAnimatingSellEffect = true;
+        this.SellAnimateNumFramesAggr = 0;
+    }
+
+    public void AnimateSellEffect()
+    {
+        if (this.currentlyAnimatingSellEffect)
+        {
+            this.SellAnimateNumFramesAggr++;
+            if (this.SellAnimateNumFramesAggr > this.numFramesToApplyEffect)
+            {
+                this.currentlyAnimatingSellEffect = false;
+                this.InvestedHeart.transform.position = this.InitialInvestedHeartPos;
+            }
+            else
+            {
+                var pos = this.InvestedHeart.transform.position;
+                pos.y += 3;
+                this.InvestedHeart.transform.position = pos;
+            }
+
+        }
+        }
 
     public float getLiquid()
     {
