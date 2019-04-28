@@ -24192,7 +24192,7 @@ MonoBehaviour:
   LiquidText: {fileID: 308671803}
   InvestedText: {fileID: 448481900}
   TotalText: {fileID: 970898710}
-  InvestedHeart: {fileID: 103053974}
+  InvestedHeart: {fileID: 1917955028}
   InvestedGreenArrow: {fileID: 1917007198}
   InvestedRedArrow: {fileID: 1973767311}
   LiquidHeart: {fileID: 103053974}
