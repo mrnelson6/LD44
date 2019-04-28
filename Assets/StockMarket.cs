@@ -13,57 +13,122 @@ public class StockMarket : MonoBehaviour
     private float perfectEconomySteadyBullGrowth = 1f;
     public Text LiquidText;
     public Text InvestedText;
-    public Text PlusText;
-    public Text MinusText;
+    public Image GreenArrow;
+    public Image RedArrow;
     public Image Monitor;
     public Image GraphLineImage;
     private List<Image> onScreenGraphLines = new List<Image>();
     private Vector3 startingPositionGraphLines;
+    private Quaternion startingRotationGraphLines;
+    private float prevInvested = 50f;
+    private float derMarketChangeAggregator = 0f;
+    private float currentDerivativeMarketChange = 0f;
+    
 
     private void Start()
     {
         this.onScreenGraphLines.Add(this.GraphLineImage);
         this.startingPositionGraphLines = new Vector3(this.GraphLineImage.transform.position.x,
                                                       this.GraphLineImage.transform.position.y);
+        this.startingRotationGraphLines = new Quaternion(this.GraphLineImage.transform.rotation.x,
+            this.GraphLineImage.transform.rotation.y,
+            this.GraphLineImage.transform.rotation.z,
+            this.GraphLineImage.transform.rotation.w);
+
+        this.UpdateLiquidAndInvestedTextAndImage();
+        InvokeRepeating("UpdateLiquidAndInvestedTextAndImage", 1f, 1f);
     }
 
     void Update()
     {
-        LiquidText.text = String.Format(  "Liquid Life:   {0} ♡", Player.CurrentLiquid);
-        InvestedText.text = String.Format("Invested Life: {0} ♡", Player.CurrentInvested["stock1key"]);
-        this.ApplyMoveGraphEffect();      
+        this.UpdateMarketChange();
+        this.ApplyMoveGraphEffect();
+        this.ApplyMarketChangeToPlayer();
+    }
+
+    void UpdateLiquidAndInvestedTextAndImage()
+    {
+        LiquidText.text = String.Format("Liquid Life:   {0:0} ♡", Player.CurrentLiquid);
+        InvestedText.text = String.Format("Invested Life: {0:0} ♡", Player.CurrentInvested["stock1key"]);
+        this.RedArrow.enabled = false;
+        this.GreenArrow.enabled = false;
+        if(this.Player.CurrentInvested["stock1key"] < this.prevInvested)
+        {
+            this.RedArrow.enabled = true;
+        }
+        if(this.Player.CurrentInvested["stock1key"] > this.prevInvested)
+        {
+            this.GreenArrow.enabled = true;
+        }
+        this.prevInvested = Player.CurrentInvested["stock1key"];
+    }
+
+    private void ApplyMarketChangeToPlayer(){
+        if (this.Player.CurrentInvested["stock1key"] <= 0f)
+        {
+            this.Player.CurrentInvested["stock1key"] = 0f;
+        }
+        else
+        {
+            this.Player.CurrentInvested["stock1key"] += this.currentDerivativeMarketChange;
+        }
+    }
+
+    private void UpdateMarketChange()
+    {
+        this.currentDerivativeMarketChange = (float)UnityEngine.Random.Range(-1f, 1f);
     }
 
     private void ApplyMoveGraphEffect()
         ///Super hacky but it workz
     {
+
+        this.derMarketChangeAggregator += this.currentDerivativeMarketChange;
         var lastDrawnGraphLine = this.onScreenGraphLines.Last<Image>();
         var imageLength = this.GraphLineImage.rectTransform.sizeDelta.x;
+        var dxToApply = -1f;
+        var dyToApply = 0f;
+        var LeftEdgeOfMonitor = (Monitor.transform.position.x - Monitor.rectTransform.sizeDelta.x / 2f) + 20f;
+        var TopEdgeOfMonitor = (Monitor.transform.position.y + Monitor.rectTransform.sizeDelta.y / 2f) - 20f;
+        var BottomEdgeOfMonitor = (Monitor.transform.position.y - Monitor.rectTransform.sizeDelta.y / 2f) + 20f; 
         if(lastDrawnGraphLine.transform.position.x < (this.startingPositionGraphLines.x - imageLength)){
-            var clone = Instantiate(lastDrawnGraphLine, this.startingPositionGraphLines, lastDrawnGraphLine.transform.rotation);
+            var clonePos = new Vector3(this.startingPositionGraphLines.x,
+                                       lastDrawnGraphLine.transform.position.y);
+            clonePos.y += this.derMarketChangeAggregator;
+            var clone = Instantiate(lastDrawnGraphLine, clonePos, this.startingRotationGraphLines);
+            clone.transform.Rotate(new Vector3(0, 1, 1), this.derMarketChangeAggregator * 5f);
             var pos = clone.transform.position;
-            //pos.x += 10;
             clone.transform.position = pos;
             clone.transform.SetParent(lastDrawnGraphLine.transform.parent);
             this.onScreenGraphLines.Add(clone);
-            //clone.transform.SetParent();
-        
-        //    this.onScreenGraphLines.Add(clone);
+            if(clone.transform.position.y > TopEdgeOfMonitor)
+            {
+                dyToApply = -10f;
+            }
+            if(clone.transform.position.y < BottomEdgeOfMonitor)
+            {
+                dyToApply = 10f;
+            }
+            this.derMarketChangeAggregator = 0f;
         }
-        var LeftEdgeOfMonitor = (Monitor.transform.position.x - Monitor.rectTransform.sizeDelta.x / 2f) + 20f;
+        var imagesToRemove = new List<Image>();
         foreach (var image in this.onScreenGraphLines) {
             var pos = image.transform.position;
-            pos.x -= 1;
+            pos.x += dxToApply;
+            pos.y += dyToApply;
             image.transform.position = pos;
             if (image.transform.position.x < LeftEdgeOfMonitor){
-                //this.onScreenGraphLines.Remove(image);
-               // DestroyImmediate(image, false);
+                imagesToRemove.Add(image);
             }
         }
-        if (GraphLineImage.transform.position.x < LeftEdgeOfMonitor)
+        foreach(var image in imagesToRemove)
         {
-            //DestroyImmediate(GraphLineImage, false);
+
+            this.onScreenGraphLines.Remove(image);
+            DestroyImmediate(image);
+
         }
+
     }
 
     private float GetMarketRateAmount(){

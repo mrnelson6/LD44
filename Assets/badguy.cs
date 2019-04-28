@@ -127,7 +127,7 @@ public class badguy : MonoBehaviour
             }
             GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
             Vector3 goodguy;
-            if (!target.transform)
+            if (target.transform == null)
             {
                 goodguy = empty.transform.position;
             }

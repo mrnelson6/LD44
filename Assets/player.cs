@@ -17,17 +17,20 @@ public class player : MonoBehaviour
     public Sprite[] rightSpr;
     private int frameCount = 0;
     private int sprIndex = 0;
-    private int sprLen = 4;
-    private int sprSpd = 10;
+    private int sprLen = 8;
+    public int sprSpd = 5;
+    private int sprLenAttack = 28;
+    public int sprSpdAttack = 2;
+    private int sprIndexAttack = 0;
     private AudioSource ass;
     public bool gameOver;
+
     public int attackCounter;
     private bool attack;
     private bool up;
     private bool down;
     private bool right;
     private bool left;
-
     public AudioClip ow;
     public AudioClip oof;
     public AudioClip almost;
@@ -53,7 +56,7 @@ public class player : MonoBehaviour
     void Awake()
     {
         upSpr = Resources.LoadAll<Sprite>("playerUp");
-        downSpr = Resources.LoadAll<Sprite>("playerDown");
+        downSpr = Resources.LoadAll<Sprite>("playerDown_attack");
         leftSpr = Resources.LoadAll<Sprite>("playerLeft");
         rightSpr = Resources.LoadAll<Sprite>("playerRight");
         ow.LoadAudioData();
@@ -70,6 +73,11 @@ public class player : MonoBehaviour
         if (frameCount % sprSpd == 0)
         {
             sprIndex = (sprIndex + 1) % sprLen;
+        }
+        //sprite frame animation for attacks
+        if (frameCount % sprSpdAttack == 0)
+        {
+            sprIndexAttack = (sprIndexAttack + 1) % sprLenAttack;
         }
 
         GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
@@ -93,6 +101,7 @@ public class player : MonoBehaviour
             down = true;
             right = false;
             left = false;
+            spriteObj.GetComponent<SpriteRenderer>().sprite = downSpr[sprIndexAttack];
         }
         if (Input.GetKey("d"))
         {
