@@ -46,6 +46,10 @@ public class badguy : MonoBehaviour
     {
         if (other.name == "Player")
         {
+            if(attackCounter > 30)
+            {
+                target.almost_damage();
+            }
             attack = false;
         }
     }
@@ -143,12 +147,12 @@ public class badguy : MonoBehaviour
             {
                 sprIndex += 3;
                 target.CurrentLiquid--;
+                target.damage();
             }
             else if (attackCounter > 80)
             {
                 attackCounter = 0;
             }
-            Debug.Log(sprIndex);
         }
         else
         {

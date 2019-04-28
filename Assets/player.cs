@@ -19,10 +19,18 @@ public class player : MonoBehaviour
     private int sprIndex = 0;
     private int sprLen = 4;
     private int sprSpd = 10;
+    private AudioSource ass;
+
+    public AudioClip ow;
+    public AudioClip oof;
+    public AudioClip almost;
+    public AudioClip murder;
+    public AudioClip get_back;
     // Start is called before the first:w frame update
     void Start()
     {
         rb.freezeRotation = true;
+        ass = GetComponent<AudioSource>();
     }
 
     void Awake()
@@ -31,6 +39,11 @@ public class player : MonoBehaviour
         downSpr = Resources.LoadAll<Sprite>("playerDown");
         leftSpr = Resources.LoadAll<Sprite>("playerLeft");
         rightSpr = Resources.LoadAll<Sprite>("playerRight");
+        ow.LoadAudioData();
+        oof.LoadAudioData();
+        almost.LoadAudioData();
+        murder.LoadAudioData();
+        get_back.LoadAudioData();
     }
 
     // Update is called once per frame
@@ -68,5 +81,40 @@ public class player : MonoBehaviour
         }
         transform.position = pos;
         frameCount++;
+    }
+
+    public void almost_damage()
+    {
+        if(!ass.isPlaying)
+        {
+            int rng = Random.Range(0, 8);
+            if (rng == 0)
+            {
+                ass.PlayOneShot(get_back, 0.5f);
+            }
+            else if (rng == 1)
+            {
+                ass.PlayOneShot(murder, 0.5f);
+            }
+            else if (rng == 2)
+            {
+                ass.PlayOneShot(almost, 0.5f);
+            }
+        }
+    }
+
+    public void damage()
+    {
+        if (!ass.isPlaying)
+        {
+            int rng = Random.Range(0, 8);
+            if (rng == 0)
+            {
+                ass.PlayOneShot(oof, 0.5f);
+            } else if (rng ==1 )
+            {
+                ass.PlayOneShot(ow, 0.5f);
+            }
+        }
     }
 }

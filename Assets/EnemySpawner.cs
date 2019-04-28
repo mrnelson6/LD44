@@ -4,27 +4,28 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public float spawnTime = 3f;
+    public float spawnTime = 5f;
     public badguy bg;
     public Transform[] spawnPoints;
     public player target;
-    private float chance;
+    private List<badguy> badguys;
+    private int chance;
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("Spawn", spawnTime, spawnTime);
-        chance = 0f;
+        chance = 0;
     }
 
     void Spawn()
     {
-        float chance = Mathf.FloorToInt(Random.Range(0.0f, 10.0f));
-        //chance = 0;
-        if (chance == 0)
+        chance = Random.Range(0, 3);
+        chance = 0;
+        if (chance == 0 && badguys.Count < 50)
         {
-            chance++;
             int spawnPointIndex = Random.Range(0, spawnPoints.Length);
             Instantiate(bg, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+            badguys.Add(bg);
             bg.target = target;
         }
     }
