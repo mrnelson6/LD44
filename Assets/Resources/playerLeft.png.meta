@@ -14,6 +14,18 @@ TextureImporter:
   - first:
       213: -7185723779736013051
     second: playerLeft_3
+  - first:
+      213: 5217562833065785864
+    second: playerLeft_4
+  - first:
+      213: 257485828769983129
+    second: playerLeft_5
+  - first:
+      213: -2436460881037002862
+    second: playerLeft_6
+  - first:
+      213: -13054308611173123
+    second: playerLeft_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -43,7 +55,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -101,8 +113,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 260
-        height: 540
+        width: 96
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -110,7 +122,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf59dea765b9bc44187d12fa166f3e94
+      spriteID: dddd1ea00fa520c46a727c6b0a1c4f9a
       internalID: -7728366263762034472
       vertices: []
       indices: 
@@ -120,10 +132,10 @@ TextureImporter:
       name: playerLeft_1
       rect:
         serializedVersion: 2
-        x: 260
+        x: 96
         y: 0
-        width: 260
-        height: 540
+        width: 96
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,7 +143,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cdd19d4da59f03540b3ca9e7d36a262d
+      spriteID: 9d8ad3e95f151e94191c3b6191063425
       internalID: -5953288402395247738
       vertices: []
       indices: 
@@ -141,10 +153,10 @@ TextureImporter:
       name: playerLeft_2
       rect:
         serializedVersion: 2
-        x: 520
+        x: 192
         y: 0
-        width: 260
-        height: 540
+        width: 96
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,7 +164,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: adc2ec13747b99c4083911a9211e653e
+      spriteID: 4936d8e7925f49548b19eeb5fbda7c5d
       internalID: -4696175450237249369
       vertices: []
       indices: 
@@ -162,10 +174,10 @@ TextureImporter:
       name: playerLeft_3
       rect:
         serializedVersion: 2
-        x: 780
+        x: 288
         y: 0
-        width: 260
-        height: 540
+        width: 96
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,8 +185,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d16b0aed1410d694e87cba818248eab0
+      spriteID: 5810f9416c119854fabe5b4399b602d7
       internalID: -7185723779736013051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: playerLeft_4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 96
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0986c9be5bfbe143ad155ecad5f8ca1
+      internalID: 5217562833065785864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: playerLeft_5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 96
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e993593ab69ca83478532c5947bb2733
+      internalID: 257485828769983129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: playerLeft_6
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 96
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45ea09fe31988064e814aecaaf92f0fe
+      internalID: -2436460881037002862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: playerLeft_7
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 0
+        width: 96
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90eb16bb96fb44744acf14f80e90e905
+      internalID: -13054308611173123
       vertices: []
       indices: 
       edges: []
@@ -182,7 +278,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 50952e88695102540a1e530d4f555cc6
+    spriteID: cc5772779809b25418462039b377dea6
     internalID: 0
     vertices: []
     indices: 

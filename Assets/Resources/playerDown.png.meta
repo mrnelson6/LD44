@@ -14,6 +14,18 @@ TextureImporter:
   - first:
       213: -8783020841776267060
     second: playerDown_3
+  - first:
+      213: -2724062536031651419
+    second: playerDown_4
+  - first:
+      213: -6575582275135912245
+    second: playerDown_5
+  - first:
+      213: -3764867078839608674
+    second: playerDown_6
+  - first:
+      213: -3620295627742584885
+    second: playerDown_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -43,7 +55,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -101,8 +113,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 260
-        height: 540
+        width: 96
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -110,7 +122,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe2ba4087b746eb449198c3313d40587
+      spriteID: 06c413651a3390a4f95a07f63a8bfcd6
       internalID: -4299196252036745943
       vertices: []
       indices: 
@@ -120,10 +132,10 @@ TextureImporter:
       name: playerDown_1
       rect:
         serializedVersion: 2
-        x: 260
+        x: 96
         y: 0
-        width: 260
-        height: 540
+        width: 96
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,7 +143,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce46794135f260048b55ff7ae84f003a
+      spriteID: 8ca5f0c20259434408d45fdfbd01fc62
       internalID: 5662033342257655587
       vertices: []
       indices: 
@@ -141,10 +153,10 @@ TextureImporter:
       name: playerDown_2
       rect:
         serializedVersion: 2
-        x: 520
+        x: 192
         y: 0
-        width: 260
-        height: 540
+        width: 96
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,7 +164,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed4bfc19f816daf4aaf5d0c348e4a708
+      spriteID: 3f1564b6565d5484db77577eef7f0ba1
       internalID: -679450863213092159
       vertices: []
       indices: 
@@ -162,10 +174,10 @@ TextureImporter:
       name: playerDown_3
       rect:
         serializedVersion: 2
-        x: 780
+        x: 288
         y: 0
-        width: 260
-        height: 540
+        width: 96
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,8 +185,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b7eb6fb5ee86f85449e4b047c6b288bc
+      spriteID: 56af6b5142c88094e9cfc2f4523ba984
       internalID: -8783020841776267060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: playerDown_4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 96
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5678a7c0600510941a755453994c26e2
+      internalID: -2724062536031651419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: playerDown_5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 96
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 638e6f7d2e4d79e449843f2170930471
+      internalID: -6575582275135912245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: playerDown_6
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 96
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61ab90ae358a37f49b87098b18afd86a
+      internalID: -3764867078839608674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: playerDown_7
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 0
+        width: 96
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 683e6dac73c103144b36aa2590d96bff
+      internalID: -3620295627742584885
       vertices: []
       indices: 
       edges: []
@@ -182,7 +278,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3da0ccfc24f958e4d87ca2af7429fca3
+    spriteID: acd392785d40a2048b38c4bc55e760e3
     internalID: 0
     vertices: []
     indices: 
