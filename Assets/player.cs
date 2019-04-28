@@ -81,6 +81,7 @@ public class player : MonoBehaviour
             pos.x -= speed * Time.deltaTime;
             spriteObj.GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
         }
+
         transform.position = pos;
         frameCount++;
     }

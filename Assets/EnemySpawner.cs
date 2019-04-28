@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     private List<badguy> badguys;
     private int chance;
     private int counter;
+    public GameObject empty;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,8 +31,9 @@ public class EnemySpawner : MonoBehaviour
             if (chance == 0 && badguys.Count < 50 && !target.gameOver)
             {
                 int spawnPointIndex = Random.Range(0, spawnPoints.Length);
-                Instantiate(bg, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+                Instantiate(bg, spawnPoints[0].transform);
                 badguys.Add(bg);
+                bg.empty = empty;
                 bg.target = target;
             }
         }

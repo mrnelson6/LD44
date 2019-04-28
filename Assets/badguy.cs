@@ -16,6 +16,7 @@ public class badguy : MonoBehaviour
     private int sprIndex = 0;
     private float direction;
     public GameObject spriteObj;
+    public GameObject empty;
     private bool attack;
     private int attackCounter;
     // Start is called before the first frame update
@@ -109,7 +110,15 @@ public class badguy : MonoBehaviour
                 meander = false;
             }
             GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
-            Vector3 goodguy = target.transform.position;
+            Vector3 goodguy;
+            if (!target.transform)
+            {
+                goodguy = empty.transform.position;
+            }
+            else
+            {
+                goodguy = target.transform.position;
+            }
             Vector3 pos = transform.position;
             Vector3 directionVec = goodguy - pos;
             directionVec.Normalize();
