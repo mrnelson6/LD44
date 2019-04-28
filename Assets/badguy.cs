@@ -148,8 +148,11 @@ public class badguy : MonoBehaviour
             else if (attackCounter < 60)
             {
                 sprIndex += 3;
-                target.CurrentLiquid--;
-                target.damage();
+                if(attackCounter == 50)
+                {
+                    target.CurrentLiquid--;
+                    target.damage();
+                }
             }
             else if (attackCounter > 80)
             {
