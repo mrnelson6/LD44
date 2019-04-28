@@ -63,8 +63,8 @@ public class StockMarket : MonoBehaviour
 
     void UpdateLiquidAndInvestedTextAndImage()
     {
-        LiquidText.text = String.Format("Liquid Life:   {0:0} ♡", Player.CurrentLiquid);
-        InvestedText.text = String.Format("Invested Life: {0:0} ♡", Player.CurrentInvested["stock1key"]);
+        LiquidText.text = String.Format("{0:0}", Player.CurrentLiquid);
+        InvestedText.text = String.Format("{0:0}", Player.CurrentInvested["stock1key"]);
         this.RedArrow.enabled = false;
         this.GreenArrow.enabled = false;
         if(this.Player.CurrentInvested["stock1key"] < this.prevInvested)
@@ -162,14 +162,12 @@ public class StockMarket : MonoBehaviour
             image.transform.position = pos;
             if (image.transform.position.x < LeftEdgeOfMonitor){
                 imagesToRemove.Add(image);
-            }
+           }
         }
         foreach(var image in imagesToRemove)
         {
-
             this.onScreenGraphLines.Remove(image);
             DestroyImmediate(image);
-
         }
 
     }
