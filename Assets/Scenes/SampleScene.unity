@@ -23880,7 +23880,7 @@ MonoBehaviour:
   GreenArrow: {fileID: 1917007198}
   RedArrow: {fileID: 1973767311}
   Monitor: {fileID: 376824552}
-  GraphLineImage: {fileID: 1433640959}
+  StartingGraphLineImage: {fileID: 1433640959}
 --- !u!1 &1664401130
 GameObject:
   m_ObjectHideFlags: 0
