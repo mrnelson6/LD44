@@ -5,13 +5,19 @@ using UnityEngine;
 public class badguy : MonoBehaviour
 {
     public float speed = 5.0f;
-    public Transform target;
+    public player target;
     public int drawOrder;
     private bool follow;
     private bool meander;
     private int counter;
     private float meanderx;
     private float meandery;
+    public Sprite[] badguyspr;
+    private int sprIndex = 0;
+    private float direction;
+    public GameObject spriteObj;
+    private bool attack;
+    private int attackCounter;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +25,9 @@ public class badguy : MonoBehaviour
         follow = false;
         meander = false;
         counter = 0;
+        attackCounter = 0;
+        direction = 0;
+        attack = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -29,8 +38,21 @@ public class badguy : MonoBehaviour
         } 
         if(other.name == "Player")
         {
-            Debug.Log("Gotcha bitch");
+            attack = true;
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.name == "Player")
+        {
+            attack = false;
+        }
+    }
+
+    void Awake()
+    {
+        badguyspr = Resources.LoadAll<Sprite>("badguySprite");
     }
 
     // Update is called once per frame
@@ -49,11 +71,17 @@ public class badguy : MonoBehaviour
                 {
                     Vector3 pos = transform.position;
                     Vector3 dest = pos;
-                    dest.x += meanderx;
-                    dest.y += meandery;
+                    dest.x += meanderx * Time.deltaTime;
+                    dest.y += meandery * Time.deltaTime;
+                    Vector3 temp;
+                    temp.x = meanderx;
+                    temp.y = meandery;
+                    temp.z = 0;
+                    temp.Normalize();
+                    direction = Vector3.SignedAngle(temp, Vector3.right, Vector3.forward);
                     pos = Vector3.MoveTowards(pos, dest, 0.05f);
                     transform.position = pos;
-                    if(pos == dest)
+                    if (pos == dest)
                     {
                         follow = true;
                         counter = 1000;
@@ -62,8 +90,8 @@ public class badguy : MonoBehaviour
                 else
                 {
                     Vector3 pos = transform.position;
-                    meanderx = Random.Range(-2.0f, 2.0f) + pos.x;
-                    meandery = Random.Range(-2.0f, 2.0f) + pos.y;
+                    meanderx = (Random.Range(-2.0f, 2.0f) + pos.x) * Time.deltaTime;
+                    meandery = (Random.Range(-2.0f, 2.0f) + pos.y) * Time.deltaTime;
                     meander = true;
                 }
             }
@@ -77,14 +105,55 @@ public class badguy : MonoBehaviour
                 meander = false;
             }
             GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
-            Vector3 goodguy = target.position;
+            Vector3 goodguy = target.transform.position;
             Vector3 pos = transform.position;
+            Vector3 directionVec = goodguy - pos;
+            directionVec.Normalize();
             pos = Vector3.MoveTowards(pos, goodguy, 0.05f);
-            float randx = Random.Range(-0.005f, 0.005f);
-            float randy = Random.Range(-0.005f, 0.005f);
-            pos.x += randx;
-            pos.y += randy;
             transform.position = pos;
+            direction = Vector3.SignedAngle(directionVec, Vector3.right, Vector3.forward);
         }
+
+        if(direction < -135 || direction > 135)
+        {
+            sprIndex = 4;
+        } else if (direction <= 135 && direction > 45)
+        {
+            sprIndex = 0;
+        }
+        else if (direction <= 45 && direction > -45)
+        {
+            sprIndex = 8;
+        } else
+        {
+            sprIndex = 12;
+        }
+        if (attack)
+        {
+            attackCounter++;
+            if (attackCounter < 20)
+            {
+                sprIndex++;
+            }
+            else if (attackCounter < 40)
+            {
+                sprIndex += 2;
+            }
+            else if (attackCounter < 60)
+            {
+                sprIndex += 3;
+                target.CurrentLiquid--;
+            }
+            else if (attackCounter > 80)
+            {
+                attackCounter = 0;
+            }
+            Debug.Log(sprIndex);
+        }
+        else
+        {
+            attackCounter = 0;
+        }
+        spriteObj.GetComponent<SpriteRenderer>().sprite = badguyspr[sprIndex];
     }
 }
