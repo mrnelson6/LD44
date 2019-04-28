@@ -19,19 +19,32 @@ public class StockMarket : MonoBehaviour
     public Image GraphLineImage;
     private List<Image> onScreenGraphLines = new List<Image>();
     private Vector3 startingPositionGraphLines;
+    private Quaternion startingRotationGraphLines;
+    private float currentDerivativeMarketChange = 0f;
 
     private void Start()
     {
         this.onScreenGraphLines.Add(this.GraphLineImage);
         this.startingPositionGraphLines = new Vector3(this.GraphLineImage.transform.position.x,
                                                       this.GraphLineImage.transform.position.y);
+        this.startingRotationGraphLines = new Quaternion(this.GraphLineImage.transform.rotation.x,
+            this.GraphLineImage.transform.rotation.y,
+            this.GraphLineImage.transform.rotation.z,
+            this.GraphLineImage.transform.rotation.w);
     }
 
     void Update()
     {
         LiquidText.text = String.Format(  "Liquid Life:   {0} ♡", Player.CurrentLiquid);
         InvestedText.text = String.Format("Invested Life: {0} ♡", Player.CurrentInvested["stock1key"]);
+        this.UpdateMarketChange();
         this.ApplyMoveGraphEffect();      
+    }
+
+    private void UpdateMarketChange()
+    {
+
+        this.currentDerivativeMarketChange = (float)UnityEngine.Random.Range(-1f, 1f);
     }
 
     private void ApplyMoveGraphEffect()
@@ -40,7 +53,12 @@ public class StockMarket : MonoBehaviour
         var lastDrawnGraphLine = this.onScreenGraphLines.Last<Image>();
         var imageLength = this.GraphLineImage.rectTransform.sizeDelta.x;
         if(lastDrawnGraphLine.transform.position.x < (this.startingPositionGraphLines.x - imageLength)){
-            var clone = Instantiate(lastDrawnGraphLine, this.startingPositionGraphLines, lastDrawnGraphLine.transform.rotation);
+            var clonePos = new Vector3(this.startingPositionGraphLines.x,
+                                       lastDrawnGraphLine.transform.position.y);
+            clonePos.y += this.currentDerivativeMarketChange * 3f;
+            //var cloneRotation = lastDrawnGraphLine.transform.Rotate(new Vector3(0, 1, 1), 20f);
+            var clone = Instantiate(lastDrawnGraphLine, clonePos, this.startingRotationGraphLines);
+            clone.transform.Rotate(new Vector3(0, 1, 1), this.currentDerivativeMarketChange * 10f);
             var pos = clone.transform.position;
             //pos.x += 10;
             clone.transform.position = pos;
