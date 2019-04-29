@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public float spawnTime = 1f;
-    public float startTime = 28f;
+    public float spawnTime = 0.5f;
+    private float startTime = 28f;
     public badguy bg;
     public Transform[] spawnPoints;
     public player target;
-    private List<badguy> badguys;
     private int chance;
     private int counter;
     public GameObject empty;
+    private bool skip;
     // Start is called before the first frame update
     void Start()
     {
+        skip = false;
         InvokeRepeating("Spawn", startTime, spawnTime);
         chance = 0;
         counter = 0;
-        badguys = new List<badguy>();
+    }
+
+     void Update()
+    {
+        if(Input.GetKey("space") && !skip)
+        {
+            CancelInvoke();
+            skip = true;
+            InvokeRepeating("Spawn", spawnTime, spawnTime);
+        }
     }
 
     void Spawn()
@@ -33,7 +43,6 @@ public class EnemySpawner : MonoBehaviour
             {
                 int spawnPointIndex = Random.Range(0, spawnPoints.Length);
                 Instantiate(bg, spawnPoints[spawnPointIndex].transform);
-                badguys.Add(bg);
                 bg.empty = empty;
                 bg.target = target;
             }

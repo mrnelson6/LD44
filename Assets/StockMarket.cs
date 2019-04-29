@@ -57,6 +57,7 @@ public class StockMarket : MonoBehaviour
     private int audioDone;
     private bool prevAudio;
     public bool start;
+    public bool skip;
 
     
     private float currentDerivativeMarketChange = 0f;
@@ -89,6 +90,7 @@ public class StockMarket : MonoBehaviour
         bckg = ambient.GetComponent<AudioSource>();
         audioDone = 0;
         start = false;
+        skip = false;
         prevAudio = false;
         ass.PlayOneShot(intro, 1.0f);
         this.UpdateLiquidAndInvestedTextAndImage();
@@ -98,6 +100,14 @@ public class StockMarket : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKey("space") && !skip)
+        {
+            audioDone = 3;
+            bckg.Play();
+            ass.Stop();
+            start = true;
+            skip = true;
+        }
         if (ass.isPlaying == false && prevAudio == true)
         {
             audioDone++;
