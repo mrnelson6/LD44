@@ -151,29 +151,25 @@ public class badguy : MonoBehaviour
                 transform.position = pos;
                 direction = Vector3.SignedAngle(directionVec, Vector3.right, Vector3.forward);
             }
-            if (frameCount % 20 == 0)
+            if (frameCount % 5 == 0)
             {
                 sprIndex = (sprIndex + 1) % 8;
             }
             if (direction < -135 || direction > 135)
             {
-                sprIndex = 4;
                 GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
             }
             else if (direction <= 135 && direction > 45)
             {
                 GetComponent<SpriteRenderer>().sprite = downSpr[sprIndex];
-                sprIndex = 0;
             }
             else if (direction <= 45 && direction > -45)
             {
                 GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
-                sprIndex = 8;
             }
             else
             {
                 GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
-                sprIndex = 12;
             }
             if (attack)
             {
