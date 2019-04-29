@@ -13,6 +13,8 @@ public class StockMarket : MonoBehaviour
     public AudioClip savings;
       public AudioClip my_wife;
     public AudioClip moving_up;
+    public AudioClip ambient_bg_noise;
+
     public player Player;
     private float defaultUnityToBuy = 2f;
     public Text LiquidText;
@@ -48,6 +50,7 @@ public class StockMarket : MonoBehaviour
     private Vector3 InitialLiquidHeartPos;
     private Vector3 InitialInvestedHeartPos;
     private AudioSource ass;
+
     
     private float currentDerivativeMarketChange = 0f;
 
