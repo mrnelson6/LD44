@@ -13,8 +13,10 @@ public class StockMarket : MonoBehaviour
     public AudioClip savings;
       public AudioClip my_wife;
     public AudioClip moving_up;
-    public AudioClip ambient_bg_noise;
     public AudioClip intro;
+    public AudioClip bell;
+    public GameObject ambient;
+    private AudioSource bckg;
 
     public player Player;
     private float defaultUnityToBuy = 2f;
@@ -52,6 +54,9 @@ public class StockMarket : MonoBehaviour
     private Vector3 InitialInvestedHeartPos;
     private AudioSource ass;
     private float imageLength;
+    private int audioDone;
+    private bool prevAudio;
+    public bool start;
 
     
     private float currentDerivativeMarketChange = 0f;
@@ -81,6 +86,10 @@ public class StockMarket : MonoBehaviour
         this.InitialInvestedHeartPos = new Vector3(this.InvestedHeart.transform.position.x,
                                                    this.InvestedHeart.transform.position.y);
         ass = GetComponent<AudioSource>();
+        bckg = ambient.GetComponent<AudioSource>();
+        audioDone = 0;
+        start = false;
+        prevAudio = false;
         ass.PlayOneShot(intro, 1.0f);
         this.UpdateLiquidAndInvestedTextAndImage();
         this.imageLength = this.StartingGraphLineImage.rectTransform.sizeDelta.x;
@@ -89,7 +98,21 @@ public class StockMarket : MonoBehaviour
 
     void Update()
     {
-        if (!Player.gameOver)
+        if (ass.isPlaying == false && prevAudio == true)
+        {
+            audioDone++;
+            if(audioDone == 1)
+            {
+                ass.PlayOneShot(bell, 0.5f);
+                start = true;
+            }
+            else if(audioDone == 2)
+            {
+                bckg.Play();
+            }
+        }
+        prevAudio = ass.isPlaying;
+        if (!Player.gameOver && start)
         {
             this.UpdateMarketChange();
             this.ApplyMoveGraphEffect();

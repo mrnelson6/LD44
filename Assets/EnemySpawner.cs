@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public float spawnTime = 1f;
+    public float startTime = 28f;
     public badguy bg;
     public Transform[] spawnPoints;
     public player target;
@@ -15,7 +16,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("Spawn", spawnTime, spawnTime);
+        InvokeRepeating("Spawn", startTime, spawnTime);
         chance = 0;
         counter = 0;
         badguys = new List<badguy>();
