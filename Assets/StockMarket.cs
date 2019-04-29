@@ -297,6 +297,7 @@ public class StockMarket : MonoBehaviour
     {
         this.currentlyAnimatingBuyEffect = true;
         this.BuyAnimateNumFramesAggr = 0;
+        this.InitialLiquidHeartPos = this.LiquidHeart.transform.position;
     }
 
     public void AnimateBuyEffect()
@@ -341,6 +342,8 @@ public class StockMarket : MonoBehaviour
     {
         this.currentlyAnimatingSellEffect = true;
         this.SellAnimateNumFramesAggr = 0;
+        this.InitialInvestedHeartPos = this.InvestedHeart.transform.position;
+
     }
 
     public void AnimateSellEffect()
