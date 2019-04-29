@@ -151,7 +151,7 @@ public class badguy : MonoBehaviour
                 transform.position = pos;
                 direction = Vector3.SignedAngle(directionVec, Vector3.right, Vector3.forward);
             }
-            if (frameCount % 5 == 0)
+            if (frameCount % 20 == 0)
             {
                 sprIndex = (sprIndex + 1) % 8;
             }

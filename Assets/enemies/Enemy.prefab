@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2892668626657279614}
   - component: {fileID: 2892668626657279615}
   - component: {fileID: 2892668626657279613}
+  - component: {fileID: 3918248659205623391}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -27,10 +28,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2892668626657279609}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.153, y: 0.098, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2892668627037981136}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -71,10 +71,10 @@ BoxCollider2D:
   m_Offset: {x: 0.046387613, y: -0.41617298}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.96, y: 1.32}
+    newSize: {x: 0.96, y: 1.32}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -93,49 +93,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 762d71ed4da35fc40b78a100a2792480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
   target: {fileID: 0}
   drawOrder: 2
-  badguyspr: []
-  spriteObj: {fileID: 2892668627037981137}
---- !u!1 &2892668627037981137
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2892668627037981136}
-  - component: {fileID: 2892668627037981142}
-  m_Layer: 0
-  m_Name: badguy
-  m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2892668627037981136
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2892668627037981137}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.24796875, y: 0.1828125, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2892668626657279608}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &2892668627037981142
+  spriteObj: {fileID: 0}
+  empty: {fileID: 0}
+  upSpr: []
+  downSpr: []
+  leftSpr: []
+  rightSpr: []
+--- !u!212 &3918248659205623391
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2892668627037981137}
+  m_GameObject: {fileID: 2892668626657279609}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -165,13 +137,14 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 88b12561953b5a142bde9418ed1254f4, type: 3}
+  m_SortingOrder: 100
+  m_Sprite: {fileID: 7634190836853768779, guid: 5830b64c917a14947a02ea5987992943,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 8.64, y: 11.43}
+  m_Size: {x: 0.96, y: 1.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
