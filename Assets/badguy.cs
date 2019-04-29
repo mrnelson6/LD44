@@ -34,6 +34,8 @@ public class badguy : MonoBehaviour
         attackCounter = 0;
         direction = 0;
         attack = false;
+        meanderx = (Random.Range(-20.0f, 3.0f));
+        meandery = (Random.Range(-20.0f, 20.0f));
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -78,19 +80,12 @@ public class badguy : MonoBehaviour
     {
         if (!follow)
         {
-            if (Mathf.FloorToInt(Random.Range(0.0f, 1000.0f)) == 0)
-            {
-                follow = true;
-                counter = 1000;
-            }
-            else
-            {
                 if(meander)
                 {
                     Vector3 pos = transform.position;
                     Vector3 dest = pos;
-                    dest.x += meanderx * Time.deltaTime;
-                    dest.y += meandery * Time.deltaTime;
+                    dest.x = meanderx;
+                    dest.y = meandery;
                     Vector3 temp;
                     temp.x = meanderx;
                     temp.y = meandery;
@@ -99,20 +94,22 @@ public class badguy : MonoBehaviour
                     direction = Vector3.SignedAngle(temp, Vector3.right, Vector3.forward);
                     pos = Vector3.MoveTowards(pos, dest, speed);
                     transform.position = pos;
-                    if (pos == dest)
+                    Vector3 distance = pos - dest;
+
+                    if (distance.magnitude < 3.0f)
                     {
                         follow = true;
-                        counter = 1000;
+                    counter = 1000;
+                    meander = false;
                     }
                 }
                 else
                 {
                     Vector3 pos = transform.position;
-                    meanderx = (Random.Range(-2.0f, 2.0f) + pos.x) * Time.deltaTime;
-                    meandery = (Random.Range(-2.0f, 2.0f) + pos.y) * Time.deltaTime;
+                meanderx = Random.Range(-20.0f, 3.0f);
+                meandery = Random.Range(-20.0f, 20.0f);
                     meander = true;
                 }
-            }
         }
         else
         {
@@ -157,23 +154,23 @@ public class badguy : MonoBehaviour
         if (attack)
         {
             attackCounter++;
-            if (attackCounter < 20)
+            if (attackCounter < 8)
             {
                 sprIndex++;
             }
-            else if (attackCounter < 40)
+            else if (attackCounter < 15)
             {
                 sprIndex += 2;
             }
-            else if (attackCounter < 60)
+            else if (attackCounter < 20)
             {
                 sprIndex += 3;
-                if(attackCounter == 50)
+                if(attackCounter == 18)
                 {
                     target.damage();
                 }
             }
-            else if (attackCounter > 80)
+            else if (attackCounter > 27)
             {
                 attackCounter = 0;
             }

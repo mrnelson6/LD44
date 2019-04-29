@@ -7,8 +7,12 @@ using UnityEngine.UI;
 
 public class StockMarket : MonoBehaviour
 {
-    public AudioSource audioclipbuy;
-    public AudioSource audioclipsell;
+    public AudioClip audioclipbuy;
+    public AudioClip audioclipsell;
+      public AudioClip shoes;
+    public AudioClip savings;
+      public AudioClip my_wife;
+    public AudioClip moving_up;
     public player Player;
     private float defaultUnityToBuy = 2f;
     public Text LiquidText;
@@ -43,6 +47,7 @@ public class StockMarket : MonoBehaviour
     private int numFramesToApplyEffect = 20;
     private Vector3 InitialLiquidHeartPos;
     private Vector3 InitialInvestedHeartPos;
+    private AudioSource ass;
     
     private float currentDerivativeMarketChange = 0f;
 
@@ -53,6 +58,8 @@ public class StockMarket : MonoBehaviour
         this.SMLineYellowOK = Resources.Load<Sprite>("SMLine3");
         this.SMLineOrangeBad = Resources.Load<Sprite>("SMLine4");
         this.SMLineRedYikes = Resources.Load<Sprite>("SMLine5");
+        audioclipbuy.LoadAudioData();
+        audioclipsell.LoadAudioData();
     }
 
     private void Start()
@@ -68,7 +75,7 @@ public class StockMarket : MonoBehaviour
                                                    this.LiquidHeart.transform.position.y);
         this.InitialInvestedHeartPos = new Vector3(this.InvestedHeart.transform.position.x,
                                                    this.InvestedHeart.transform.position.y);
-
+        ass = GetComponent<AudioSource>();
         this.UpdateLiquidAndInvestedTextAndImage();
         InvokeRepeating("UpdateLiquidAndInvestedTextAndImage", 1f, 1f);
     }
@@ -166,6 +173,15 @@ public class StockMarket : MonoBehaviour
             if (this.derMarketChangeAggregator >= greatThresh)
             {
                 clone.sprite = this.SMLineGreenGreat;
+                int chance = UnityEngine.Random.Range(0, 10);
+                if (chance == 0 && !ass.isPlaying)
+                {
+                    ass.PlayOneShot(moving_up, 0.5f);
+                }
+                else if (chance == 1 && !ass.isPlaying)
+                {
+                    ass.PlayOneShot(shoes, 0.5f);
+                }
             } else if(derMarketChangeAggregator < greatThresh && 
                       derMarketChangeAggregator >= goodThresh){
                 clone.sprite = this.SMLineGreenGood;
@@ -178,6 +194,14 @@ public class StockMarket : MonoBehaviour
                 clone.sprite = this.SMLineOrangeBad;
             } else if (derMarketChangeAggregator < badThresh)
             {
+                int chance = UnityEngine.Random.Range(0, 10);
+                if(chance == 0 && !ass.isPlaying)
+                {
+                    ass.PlayOneShot(savings, 0.5f);
+                } else if (chance == 1 && !ass.isPlaying)
+                {
+                    ass.PlayOneShot(my_wife, 0.5f);
+                }
                 clone.sprite = this.SMLineRedYikes;
             } else
             {
@@ -214,7 +238,10 @@ public class StockMarket : MonoBehaviour
         var amount = this.GetMarketRateAmount();
         if(this.Player.CurrentLiquid > amount)
         {
-            audioclipbuy.PlayScheduled(0.5);
+            if (!ass.isPlaying)
+            {
+                ass.PlayOneShot(audioclipbuy, 0.5f);
+            }
             this.Player.CurrentLiquid -= amount;
             this.Player.CurrentInvested[stockKey] += amount;
         }
@@ -256,7 +283,10 @@ public class StockMarket : MonoBehaviour
         {
             this.Player.CurrentLiquid += amount;
             this.Player.CurrentInvested[stockKey] -= amount;
-            audioclipsell.PlayScheduled(0.5);
+            if(!ass.isPlaying)
+            {
+                ass.PlayOneShot(audioclipsell, 0.5f);
+            }
         }
         if (!this.currentlyAnimatingSellEffect)
         {

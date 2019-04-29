@@ -89,6 +89,10 @@ public class player : MonoBehaviour
         {
             attack = true;
         }
+        if (Input.GetKeyDown("space"))
+        {
+            gameOver = true;
+        }
         float speed_time = speed * Time.deltaTime;
         up = false;
         down = false;
