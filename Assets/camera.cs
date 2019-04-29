@@ -8,6 +8,7 @@ public class camera : MonoBehaviour
     public player target;
     public SpriteRenderer gameO;
     public SpriteRenderer help;
+    public SpriteRenderer tip;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,14 @@ public class camera : MonoBehaviour
         if (Input.GetKeyUp("h"))
         {
             help.sortingOrder = -110;
+        }
+        // pos.y -= 2;
+        Vector3 tippos = target.transform.position;
+        tippos.y -= 3.5f;
+        tip.transform.position = tippos;
+        if (Input.GetKey("space"))
+        {
+            tip.sortingOrder = -110;
         }
     }
 }
