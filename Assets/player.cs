@@ -81,7 +81,7 @@ public class player : MonoBehaviour
         {
             sprIndexAttack = (sprIndexAttack + 1) % sprLenAttack;
         }
-
+        
         GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
 
         Vector3 pos = transform.position;
@@ -89,8 +89,11 @@ public class player : MonoBehaviour
         {
             attack = true;
         }
-
-
+        float speed_time = speed * Time.deltaTime;
+        up = false;
+        down = false;
+        right = false;
+        left = false;
         if (Input.GetKey("w"))
         {
             pos.y += speed * Time.deltaTime;
@@ -98,15 +101,9 @@ public class player : MonoBehaviour
             {
                 spriteObj.GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
             }
-            else
-            {
-                spriteObj.GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
-            }
 
             up = true;
-            down = false;
-            right = false;
-            left = false;
+
         }
         if (Input.GetKey("s"))
         {
@@ -115,51 +112,86 @@ public class player : MonoBehaviour
             {
                 spriteObj.GetComponent<SpriteRenderer>().sprite = downSpr[sprIndex];
             }
-            else
-            {
-                spriteObj.GetComponent<SpriteRenderer>().sprite = downSprAttack[sprIndexAttack];
-            }
 
-            up = false;
             down = true;
-            right = false;
-            left = false;
+
         }
         if (Input.GetKey("d"))
         {
-            pos.x += speed * Time.deltaTime;
+ 
+            if (up)
+            {
+                pos.y -= speed_time;
+                pos.y += Mathf.Sqrt((speed_time * speed_time) / 1.5f);
+            }
+            if (down)
+            {
+                pos.y += speed * Time.deltaTime;
+                pos.y -= Mathf.Sqrt((speed_time * speed_time) / 1.5f);
+            }
+            if (up || down)
+            {
+                pos.x += Mathf.Sqrt((speed_time * speed_time) / 1.5f);
+            }
+            else
+            {
+                pos.x += speed * Time.deltaTime;
+            }
+
             if (!attack)
             {
                 spriteObj.GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
             }
-            else
-            {
-                spriteObj.GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
-            }
 
-            up = false;
-            down = false;
             right = true;
-            left = false;
+
         }
         if (Input.GetKey("a"))
         {
-            pos.x -= speed * Time.deltaTime;
+            if (up)
+            {
+                pos.y -= speed * Time.deltaTime;
+                pos.y += Mathf.Sqrt((speed_time * speed_time) / 1.5f);
+            }
+            if (down)
+            {
+                pos.y += speed * Time.deltaTime;
+                pos.y -= Mathf.Sqrt((speed_time * speed_time) / 1.5f);
+
+            }
+            if (up || down)
+            {
+                pos.x -= Mathf.Sqrt((speed_time * speed_time) / 1.5f);
+            }
+            else
+            {
+                pos.x -= speed * Time.deltaTime;
+            }
             if (!attack)
             {
                 spriteObj.GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
             }
-            else
+            left = true;
+        }
+        if (attack)
+        {
+            if (up)
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
+            }
+            else if (down)
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = downSprAttack[attackCounter];
+            }
+            else if (left)
             {
                 spriteObj.GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
             }
-
-            up = false;
-            down = false;
-            right = false;
-            left = true;
+            else if (right)
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
+            }
         }
-
         if(attack)
         {
             attackCounter++;
@@ -179,12 +211,12 @@ public class player : MonoBehaviour
                     place.x = 1;
                 } 
                 if(left){
-                    place.y = -1;
+                    place.x = -1;
                 }
                 cc.offset = place;
                 //start the attack
             }
-            if(attackCounter > 18)
+            if(attackCounter > 27)
             {
                 attack = false;
                 attackCounter = 0;

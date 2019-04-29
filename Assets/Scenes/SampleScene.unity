@@ -23916,7 +23916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  drawOrder: 3
+  drawOrder: 2
   rb: {fileID: 1044896524}
   CurrentLiquid: 50
   spriteObj: {fileID: 227498630}
