@@ -50,6 +50,7 @@ public class StockMarket : MonoBehaviour
     private Vector3 InitialLiquidHeartPos;
     private Vector3 InitialInvestedHeartPos;
     private AudioSource ass;
+    private float imageLength;
 
     
     private float currentDerivativeMarketChange = 0f;
@@ -80,6 +81,7 @@ public class StockMarket : MonoBehaviour
                                                    this.InvestedHeart.transform.position.y);
         ass = GetComponent<AudioSource>();
         this.UpdateLiquidAndInvestedTextAndImage();
+        this.imageLength = this.StartingGraphLineImage.rectTransform.sizeDelta.x;
         InvokeRepeating("UpdateLiquidAndInvestedTextAndImage", 1f, 1f);
     }
 
@@ -146,13 +148,12 @@ public class StockMarket : MonoBehaviour
 
         this.derMarketChangeAggregator += this.currentDerivativeMarketChange;
         var lastDrawnGraphLine = this.onScreenGraphLines.Last<Image>();
-        var imageLength = this.StartingGraphLineImage.rectTransform.sizeDelta.x;
         var dxToApply = -1f;
         var dyToApply = 0f;
         var LeftEdgeOfMonitor = (Monitor.transform.position.x - Monitor.rectTransform.sizeDelta.x / 2f) + 20f;
         var TopEdgeOfMonitor = (Monitor.transform.position.y + Monitor.rectTransform.sizeDelta.y / 2f) - 20f;
         var BottomEdgeOfMonitor = (Monitor.transform.position.y - Monitor.rectTransform.sizeDelta.y / 2f) + 20f; 
-        if(lastDrawnGraphLine.transform.position.x < (this.startingPositionGraphLines.x - imageLength)){
+        if(lastDrawnGraphLine.transform.position.x < (this.startingPositionGraphLines.x - this.imageLength)){
             var clonePos = new Vector3(this.startingPositionGraphLines.x,
                                        lastDrawnGraphLine.transform.position.y);
             clonePos.y += this.derMarketChangeAggregator;
@@ -230,7 +231,7 @@ public class StockMarket : MonoBehaviour
         foreach(var image in imagesToRemove)
         {
             this.onScreenGraphLines.Remove(image);
-            DestroyImmediate(image);
+            DestroyImmediate(image.gameObject);
         }
 
     }
