@@ -68742,6 +68742,7 @@ MonoBehaviour:
   downSprAttack: []
   rightSprAttack: []
   leftSprAttack: []
+  upSprAttack: []
   leftSpr: []
   rightSpr: []
   sprSpd: 5

@@ -16,6 +16,7 @@ public class player : MonoBehaviour
     public Sprite[] downSprAttack;
     public Sprite[] rightSprAttack;
     public Sprite[] leftSprAttack;
+    public Sprite[] upSprAttack;
     public Sprite[] leftSpr;
     public Sprite[] rightSpr;
     private int frameCount = 0;
@@ -61,6 +62,7 @@ public class player : MonoBehaviour
         downSprAttack = Resources.LoadAll<Sprite>("playerDown_attack");
         rightSprAttack = Resources.LoadAll<Sprite>("playerRight_attack");
         leftSprAttack = Resources.LoadAll<Sprite>("playerLeft_attack");
+        upSprAttack = Resources.LoadAll<Sprite>("playerUp_attack");
         leftSpr = Resources.LoadAll<Sprite>("playerLeft");
         rightSpr = Resources.LoadAll<Sprite>("playerRight");
         ow.LoadAudioData();
@@ -193,7 +195,7 @@ public class player : MonoBehaviour
         {
             if (up)
             {
-                spriteObj.GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
+                spriteObj.GetComponent<SpriteRenderer>().sprite = upSprAttack[attackCounter];
             }
             else if (left)
             {

@@ -157,23 +157,19 @@ public class badguy : MonoBehaviour
             }
             if (direction < -135 || direction > 135)
             {
-                sprIndex = 4;
                 GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
             }
             else if (direction <= 135 && direction > 45)
             {
                 GetComponent<SpriteRenderer>().sprite = downSpr[sprIndex];
-                sprIndex = 0;
             }
             else if (direction <= 45 && direction > -45)
             {
                 GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
-                sprIndex = 8;
             }
             else
             {
                 GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
-                sprIndex = 12;
             }
             if (attack)
             {
