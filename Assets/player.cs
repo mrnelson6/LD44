@@ -96,10 +96,7 @@ public class player : MonoBehaviour
             gameOver = true;
         }
         float speed_time = speed * Time.deltaTime;
-        up = false;
-        down = false;
-        right = false;
-        left = false;
+
         if (Input.GetKey("w"))
         {
             pos.y += speed * Time.deltaTime;
@@ -107,7 +104,10 @@ public class player : MonoBehaviour
             {
                 spriteObj.GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
             }
-
+            up = false;
+            down = false;
+            right = false;
+            left = false;
             up = true;
 
         }
@@ -118,7 +118,10 @@ public class player : MonoBehaviour
             {
                 spriteObj.GetComponent<SpriteRenderer>().sprite = downSpr[sprIndex];
             }
-
+            up = false;
+            down = false;
+            right = false;
+            left = false;
             down = true;
 
         }
@@ -148,7 +151,10 @@ public class player : MonoBehaviour
             {
                 spriteObj.GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
             }
-
+            up = false;
+            down = false;
+            right = false;
+            left = false;
             right = true;
 
         }
@@ -177,6 +183,10 @@ public class player : MonoBehaviour
             {
                 spriteObj.GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
             }
+            up = false;
+            down = false;
+            right = false;
+            left = false;
             left = true;
         }
         if (attack)

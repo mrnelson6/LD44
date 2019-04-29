@@ -110,8 +110,8 @@ public class badguy : MonoBehaviour
                     pos = Vector3.MoveTowards(pos, dest, speed);
                     transform.position = pos;
                     Vector3 distance = pos - dest;
-
-                    if (distance.magnitude < 3.0f)
+                    int chance = Random.Range(0, 10000);
+                    if (distance.magnitude < 3.0f || chance == 1)
                     {
                         follow = true;
                         counter = 1000;
