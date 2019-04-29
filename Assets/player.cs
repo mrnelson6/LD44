@@ -89,7 +89,7 @@ public class player : MonoBehaviour
         {
             attack = true;
         }
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("q"))
         {
             gameOver = true;
         }

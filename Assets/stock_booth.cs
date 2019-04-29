@@ -34,11 +34,11 @@ public class stock_booth : MonoBehaviour
     {
         if (close)
         {         
-            if (Input.GetKeyDown("v"))
+            if (Input.GetKeyDown("v") && !sm.Player.gameOver)
             { 
                 sm.Sell("stock1key");
             }
-            else if (Input.GetKeyDown("b"))
+            else if (Input.GetKeyDown("b") && !sm.Player.gameOver)
             {
                 sm.Buy("stock1key");
             }

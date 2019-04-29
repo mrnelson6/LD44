@@ -82,11 +82,14 @@ public class StockMarket : MonoBehaviour
 
     void Update()
     {
-        this.UpdateMarketChange();
-        this.ApplyMoveGraphEffect();
-        this.ApplyMarketChangeToPlayer();
-        this.AnimateBuyEffect();
-        this.AnimateSellEffect();
+        if (!Player.gameOver)
+        {
+            this.UpdateMarketChange();
+            this.ApplyMoveGraphEffect();
+            this.ApplyMarketChangeToPlayer();
+            this.AnimateBuyEffect();
+            this.AnimateSellEffect();
+        }
     }
 
     void UpdateLiquidAndInvestedTextAndImage()
