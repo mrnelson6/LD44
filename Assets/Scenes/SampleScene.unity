@@ -70247,6 +70247,7 @@ MonoBehaviour:
   StartingGraphLineImage: {fileID: 1433640959}
   start: 0
   skip: 0
+--- !u!82 &1543182233
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70257,8 +70258,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.207
+  m_PlayOnAwake: 0
+  m_Volume: 0.405
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -71330,7 +71331,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnTime: 3
-  startTime: 28
   bg: {fileID: 2892668626657279613, guid: 14dae0046de36e44695a8b13bcce4179, type: 3}
   spawnPoints:
   - {fileID: 437485442}
