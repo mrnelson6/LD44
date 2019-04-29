@@ -14,6 +14,7 @@ public class StockMarket : MonoBehaviour
       public AudioClip my_wife;
     public AudioClip moving_up;
     public AudioClip ambient_bg_noise;
+    public AudioClip intro;
 
     public player Player;
     private float defaultUnityToBuy = 2f;
@@ -80,6 +81,7 @@ public class StockMarket : MonoBehaviour
         this.InitialInvestedHeartPos = new Vector3(this.InvestedHeart.transform.position.x,
                                                    this.InvestedHeart.transform.position.y);
         ass = GetComponent<AudioSource>();
+        ass.PlayOneShot(intro, 1.0f);
         this.UpdateLiquidAndInvestedTextAndImage();
         this.imageLength = this.StartingGraphLineImage.rectTransform.sizeDelta.x;
         InvokeRepeating("UpdateLiquidAndInvestedTextAndImage", 1f, 1f);
