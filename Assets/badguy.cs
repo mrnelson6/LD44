@@ -12,7 +12,6 @@ public class badguy : MonoBehaviour
     private int counter;
     private float meanderx;
     private float meandery;
-    public Sprite[] badguyspr;
     private int sprIndex = 0;
     private float direction;
     public GameObject spriteObj;
@@ -21,6 +20,11 @@ public class badguy : MonoBehaviour
     private int attackCounter;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    public Sprite[] upSpr;
+    public Sprite[] downSpr;
+    public Sprite[] leftSpr;
+    public Sprite[] rightSpr;
+    private int frameCount;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +40,7 @@ public class badguy : MonoBehaviour
         attack = false;
         meanderx = (Random.Range(-20.0f, 3.0f));
         meandery = (Random.Range(-20.0f, 20.0f));
+        frameCount = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -48,6 +53,14 @@ public class badguy : MonoBehaviour
         {
             attack = true;
         }
+    }
+
+    void Awake()
+    {
+        upSpr = Resources.LoadAll<Sprite>("enemyUp");
+        downSpr = Resources.LoadAll<Sprite>("enemyDown");
+        leftSpr = Resources.LoadAll<Sprite>("enemyLeft");
+        rightSpr = Resources.LoadAll<Sprite>("enemyRight");
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -70,14 +83,10 @@ public class badguy : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        badguyspr = Resources.LoadAll<Sprite>("badguySprite");
-    }
-
     // Update is called once per frame
     void Update()
     {
+        frameCount++;
         if (target.gameOver)
         {
             Destroy(this.gameObject);
@@ -142,37 +151,46 @@ public class badguy : MonoBehaviour
                 transform.position = pos;
                 direction = Vector3.SignedAngle(directionVec, Vector3.right, Vector3.forward);
             }
-
+            if (frameCount % 5 == 0)
+            {
+                sprIndex = (sprIndex + 1) % 8;
+            }
             if (direction < -135 || direction > 135)
             {
                 sprIndex = 4;
+                GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
             }
             else if (direction <= 135 && direction > 45)
             {
+                GetComponent<SpriteRenderer>().sprite = downSpr[sprIndex];
                 sprIndex = 0;
             }
             else if (direction <= 45 && direction > -45)
             {
+                GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
                 sprIndex = 8;
             }
             else
             {
+                GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
                 sprIndex = 12;
             }
             if (attack)
             {
                 attackCounter++;
-                if (attackCounter < 8)
+                //Used for animating atttacks
+                //if (attackCounter < 8)
+                //{
+                //    sprIndex++;
+                //}
+                //else if (attackCounter < 15)
+                //{
+                //    sprIndex += 2;
+                //}
+                //else 
+                if (attackCounter < 20)
                 {
-                    sprIndex++;
-                }
-                else if (attackCounter < 15)
-                {
-                    sprIndex += 2;
-                }
-                else if (attackCounter < 20)
-                {
-                    sprIndex += 3;
+                    //sprIndex += 3;
                     if (attackCounter == 18)
                     {
                         target.damage();
@@ -187,7 +205,7 @@ public class badguy : MonoBehaviour
             {
                 attackCounter = 0;
             }
-            spriteObj.GetComponent<SpriteRenderer>().sprite = badguyspr[sprIndex];
+            //spriteObj.GetComponent<SpriteRenderer>().sprite = badguyspr[sprIndex];
         }
     }
 }

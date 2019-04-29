@@ -14,15 +14,14 @@ public class player : MonoBehaviour
     public Sprite[] upSpr;
     public Sprite[] downSpr;
     public Sprite[] downSprAttack;
+    public Sprite[] rightSprAttack;
+    public Sprite[] leftSprAttack;
     public Sprite[] leftSpr;
     public Sprite[] rightSpr;
     private int frameCount = 0;
     private int sprIndex = 0;
     private int sprLen = 8;
     public int sprSpd = 5;
-    private int sprLenAttack = 28;
-    public int sprSpdAttack = 2;
-    private int sprIndexAttack = 0;
     private AudioSource ass;
     public bool gameOver;
 
@@ -37,6 +36,7 @@ public class player : MonoBehaviour
     public AudioClip almost;
     public AudioClip murder;
     public AudioClip get_back;
+    public AudioClip gameOverclip;
 
     public CircleCollider2D cc;
     // Start is called before the first:w frame update
@@ -59,6 +59,8 @@ public class player : MonoBehaviour
         upSpr = Resources.LoadAll<Sprite>("playerUp");
         downSpr = Resources.LoadAll<Sprite>("playerDown");
         downSprAttack = Resources.LoadAll<Sprite>("playerDown_attack");
+        rightSprAttack = Resources.LoadAll<Sprite>("playerRight_attack");
+        leftSprAttack = Resources.LoadAll<Sprite>("playerLeft_attack");
         leftSpr = Resources.LoadAll<Sprite>("playerLeft");
         rightSpr = Resources.LoadAll<Sprite>("playerRight");
         ow.LoadAudioData();
@@ -66,6 +68,7 @@ public class player : MonoBehaviour
         almost.LoadAudioData();
         murder.LoadAudioData();
         get_back.LoadAudioData();
+        gameOverclip.LoadAudioData();
     }
 
     // Update is called once per frame
@@ -75,11 +78,6 @@ public class player : MonoBehaviour
         if (frameCount % sprSpd == 0)
         {
             sprIndex = (sprIndex + 1) % sprLen;
-        }
-        //sprite frame animation for attacks
-        if (frameCount % sprSpdAttack == 0)
-        {
-            sprIndexAttack = (sprIndexAttack + 1) % sprLenAttack;
         }
         
         GetComponentInChildren<SpriteRenderer>().sortingOrder = -Mathf.RoundToInt(transform.position.y) + drawOrder;
@@ -91,6 +89,10 @@ public class player : MonoBehaviour
         }
         if (Input.GetKeyDown("q"))
         {
+            if(!gameOver)
+            {
+                ass.PlayOneShot(gameOverclip, 0.5f);
+            }
             gameOver = true;
         }
         float speed_time = speed * Time.deltaTime;
@@ -183,17 +185,17 @@ public class player : MonoBehaviour
             {
                 spriteObj.GetComponent<SpriteRenderer>().sprite = upSpr[sprIndex];
             }
-            else if (down)
-            {
-                spriteObj.GetComponent<SpriteRenderer>().sprite = downSprAttack[attackCounter];
-            }
             else if (left)
             {
-                spriteObj.GetComponent<SpriteRenderer>().sprite = leftSpr[sprIndex];
+                spriteObj.GetComponent<SpriteRenderer>().sprite = leftSprAttack[attackCounter];
             }
             else if (right)
             {
-                spriteObj.GetComponent<SpriteRenderer>().sprite = rightSpr[sprIndex];
+                spriteObj.GetComponent<SpriteRenderer>().sprite = rightSprAttack[attackCounter];
+            }
+            else if (down)
+            {
+                spriteObj.GetComponent<SpriteRenderer>().sprite = downSprAttack[attackCounter];
             }
         }
         if(attack)
@@ -204,18 +206,18 @@ public class player : MonoBehaviour
                 Vector2 place = cc.offset;
                 if (up)
                 {
-                    place.y = 1;
+                    place.y = 0.6f;
                 }
                 if (down)
                 {
-                    place.y = -1;
+                    place.y = -0.6f;
                 }
                  if (right)
                 {
-                    place.x = 1;
+                    place.x = 0.6f;
                 } 
                 if(left){
-                    place.x = -1;
+                    place.x = -0.6f;
                 }
                 cc.offset = place;
                 //start the attack
