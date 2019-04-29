@@ -99,7 +99,7 @@ public class player : MonoBehaviour
         }
         float speed_time = speed * Time.deltaTime;
 
-        if (Input.GetKey("w"))
+        if (Input.GetKey("w") || Input.GetKey("up"))
         {
             pos.y += speed * Time.deltaTime;
             if(!attack)
@@ -113,7 +113,7 @@ public class player : MonoBehaviour
             up = true;
 
         }
-        if (Input.GetKey("s"))
+        if (Input.GetKey("s") || Input.GetKey("down"))
         {
             pos.y -= speed * Time.deltaTime;
             if (!attack)
@@ -127,7 +127,7 @@ public class player : MonoBehaviour
             down = true;
 
         }
-        if (Input.GetKey("d"))
+        if (Input.GetKey("d") || Input.GetKey("right"))
         {
  
             if (up)
@@ -160,7 +160,7 @@ public class player : MonoBehaviour
             right = true;
 
         }
-        if (Input.GetKey("a"))
+        if (Input.GetKey("a") || Input.GetKey("left"))
         {
             if (up)
             {
